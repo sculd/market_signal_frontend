@@ -28,4 +28,8 @@ app.get('/navbar.html', function(req, res) {
   res.sendFile(__dirname + '/navbar.html');
 });
 
+app.get('/footer.html', function(req, res) {
+  res.sendFile(__dirname + '/footer.html');
+});
+
 app.listen(port);
