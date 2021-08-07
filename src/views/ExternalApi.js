@@ -121,8 +121,7 @@ export const ExternalApiComponent = () => {
         </p>
 
         <p>
-          This will call a local API on port 3001 that would have been started
-          if you run <code>npm run dev</code>. An access token is sent as part
+          This will make a GET call to the Alerts API. An access token is sent as part
           of the request's `Authorization` header and the API will validate it
           using the API's audience value.
         </p>

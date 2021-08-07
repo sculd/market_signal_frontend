@@ -30,19 +30,6 @@ describe("The ExternalApi component", () => {
     render(<ExternalApiComponent />);
   });
 
-  it("makes a call to the API when the button is clicked", async () => {
-    fetch.mockResponseOnce(JSON.stringify({ msg: "This is the API result" }));
-
-    render(<ExternalApiComponent />);
-    fireEvent.click(screen.getByText("Ping API"));
-
-    await waitFor(() => screen.getByTestId("api-result"));
-
-    expect(
-      await screen.findByText(/This is the API result/)
-    ).toBeInTheDocument();
-  });
-
   it("shows the warning content when there is no audience", async () => {
     const { getConfig } = require("../../config");
 
