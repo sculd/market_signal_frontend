@@ -1,35 +1,14 @@
-const port = 3000;
+const express = require("express");
+const morgan = require("morgan");
+const helmet = require("helmet");
+const { join } = require("path");
 
-var express = require('express'),
-  app = express(),
-  http = require('http'),
-  httpServer = http.Server(app);
+const app = express();
 
-app.use(express.static(__dirname + '/assets'));
-app.use('/assets', express.static('assets'))
+const port = process.env.SERVER_PORT || 3000;
 
-app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/index.html');
-});
+app.use(morgan("dev"));
+app.use(helmet());
+app.use(express.static(join(__dirname, "build")));
 
-app.get('/alert', function(req, res) {
-  res.sendFile(__dirname + '/alert.html');
-});
-
-app.get('/subscription', function(req, res) {
-  res.sendFile(__dirname + '/subscription.html');
-});
-
-app.get('/about', function(req, res) {
-  res.sendFile(__dirname + '/about.html');
-});
-
-app.get('/navbar.html', function(req, res) {
-  res.sendFile(__dirname + '/navbar.html');
-});
-
-app.get('/footer.html', function(req, res) {
-  res.sendFile(__dirname + '/footer.html');
-});
-
-app.listen(port);
+app.listen(port, () => console.log(`Server listening on port ${port}`));
