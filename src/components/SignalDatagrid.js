@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 //import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -97,6 +98,11 @@ const Styles = styled.div`
 `;
 
 function SignalDataGrid() {
+  const [error] = useState(null);
+  const [isLoaded] = useState(false);
+  const [isStockLoading] = useState(true);
+  const [isCryptoLoading] = useState(true);
+
   /*
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -194,6 +200,7 @@ function SignalDataGrid() {
   useEffect(() => {
     fetchUpdateCrypto();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  //*/
     
   const Loading = () => (
     <div>
@@ -210,11 +217,7 @@ function SignalDataGrid() {
   const IsLoaded = () => (
     <div></div>
   )
-          { isStockLoading || isCryptoLoading ? <Loading /> : null }
-          { error ? <Error />  : null }
-          { isLoaded? <IsLoaded /> : null }
-  //*/
-
+  
   return (
     <Styles>
       <Tabs>
@@ -224,6 +227,9 @@ function SignalDataGrid() {
         </TabList>
     
         <div>
+          { isStockLoading || isCryptoLoading ? <Loading /> : null }
+          { error ? <Error />  : null }
+          { isLoaded? <IsLoaded /> : null }
         </div>
         <TabPanel>
         </TabPanel>
