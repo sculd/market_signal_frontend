@@ -1,11 +1,11 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import styled from "styled-components";
+//import { useState, useEffect } from "react";
+//import styled from "styled-components";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import { DataGrid  } from '@material-ui/data-grid';
-//import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
-  
+//import { DataGrid  } from '@material-ui/data-grid';
+
+/*
 const columns = [
     {
         field: 'datetime_et',
@@ -51,19 +51,7 @@ const columns = [
     },
     ];
 
-/*
-const theme = createMuiTheme({
-    typography: {
-        fontSize: 12
-    },
-});
-//*/
-
 function DataGridWithRows({ rows }) {
-    /*
-    <MuiThemeProvider theme={theme}>
-    </MuiThemeProvider>
-    //*/
     return (
       <div style={{ height: 700, width: '100%' }}>
         <DataGrid rows={rows} columns={columns} pageSize={10} 
@@ -106,8 +94,10 @@ const Styles = styled.div`
     }
   }
 `;
+//*/
 
 function SignalDataGrid() {
+  /*
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isStockLoading, setIsStockLoading] = useState(true);
@@ -220,6 +210,10 @@ function SignalDataGrid() {
   const IsLoaded = () => (
     <div></div>
   )
+          { isStockLoading || isCryptoLoading ? <Loading /> : null }
+          { error ? <Error />  : null }
+          { isLoaded? <IsLoaded /> : null }
+  //*/
 
   return (
     <Styles>
@@ -230,15 +224,10 @@ function SignalDataGrid() {
         </TabList>
     
         <div>
-          { isStockLoading || isCryptoLoading ? <Loading /> : null }
-          { error ? <Error />  : null }
-          { isLoaded? <IsLoaded /> : null }
         </div>
         <TabPanel>
-          <DataGridWithRows rows={stockItems} />
         </TabPanel>
         <TabPanel>
-          <DataGridWithRows rows={cryptoItems} />
         </TabPanel>
       </Tabs>
     </Styles>

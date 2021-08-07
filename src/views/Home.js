@@ -1,9 +1,10 @@
 import React, { Fragment } from "react";
 
-//import SignalDataGrid from "../components/SignalDatagrid";
+import SignalDataGrid from "../components/SignalDatagrid";
 
 const Home = () => (
   <Fragment>
+    <SignalDataGrid />
   </Fragment>
 );
 
