@@ -6,7 +6,8 @@ import { getConfig } from "../config";
 import Loading from "../components/Loading";
 
 export const ExternalApiComponent = () => {
-  const { apiOrigin = "http://localhost:3001", audience } = getConfig();
+  const { audience } = getConfig();
+  const alertApiOrigin = "https://ynpz1kpon8.execute-api.us-east-2.amazonaws.com/test";
 
   const [state, setState] = useState({
     showResult: false,
@@ -18,6 +19,7 @@ export const ExternalApiComponent = () => {
     getAccessTokenSilently,
     loginWithPopup,
     getAccessTokenWithPopup,
+    user,
   } = useAuth0();
 
   const handleConsent = async () => {
@@ -58,7 +60,7 @@ export const ExternalApiComponent = () => {
     try {
       const token = await getAccessTokenSilently();
 
-      const response = await fetch(`${apiOrigin}/api/external`, {
+      const response = await fetch(`${alertApiOrigin}/users/${user.sub.split("auth0|").pop()}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
