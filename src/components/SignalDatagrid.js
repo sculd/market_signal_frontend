@@ -1,6 +1,5 @@
 import React from "react";
-import { useState } from "react";
-//import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
@@ -100,8 +99,8 @@ const Styles = styled.div`
 function SignalDataGrid() {
   const [error] = useState(null);
   const [isLoaded] = useState(false);
-  const [isStockLoading] = useState(true);
-  const [isCryptoLoading] = useState(true);
+  const [isStockLoading, setIsStockLoading] = useState(true);
+  const [isCryptoLoading, setIsCryptoLoading] = useState(true);
 
   /*
   const [error, setError] = useState(null);
@@ -110,6 +109,7 @@ function SignalDataGrid() {
   const [isCryptoLoading, setIsCryptoLoading] = useState(true);
   const [stockItems, setStockIItems] = useState([]);
   const [cryptoItems, setCryptoItems] = useState([]);
+  //*/
 
   function addIdsToRows(rows) {
     if (rows === undefined) {
@@ -125,6 +125,7 @@ function SignalDataGrid() {
 
   function fetchUpdateStock() {
     setIsStockLoading(true);
+    /*
     fetch(
       "https://7tj23qrgl1.execute-api.us-east-2.amazonaws.com/test/moves?market=stock",
       {
@@ -150,10 +151,12 @@ function SignalDataGrid() {
         setStockIItems(addIdsToRows(data));
       }
     });
+    //*/
   }
 
   function fetchUpdateCrypto() {
     setIsCryptoLoading(true);
+    /*
     fetch(
       "https://7tj23qrgl1.execute-api.us-east-2.amazonaws.com/test/moves?market=binance",
       {
@@ -179,6 +182,7 @@ function SignalDataGrid() {
         setCryptoItems(addIdsToRows(data));
       }
     });
+    //*/
   }
 
   function onInterval() {
@@ -200,7 +204,6 @@ function SignalDataGrid() {
   useEffect(() => {
     fetchUpdateCrypto();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  //*/
     
   const Loading = () => (
     <div>
