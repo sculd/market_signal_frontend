@@ -3,10 +3,9 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import { DataGrid  } from '@material-ui/data-grid';
+//import { DataGrid  } from '@material-ui/data-grid';
 
 /*
-//*/
 const columns = [
     {
         field: 'datetime_et',
@@ -66,6 +65,7 @@ function DataGridWithRows({ rows }) {
       </div>
     );
   }
+//*/
 
 const Styles = styled.div`
   padding: 1rem;
@@ -97,21 +97,12 @@ const Styles = styled.div`
 `;
 
 function SignalDataGrid() {
-  const [error] = useState(null);
-  const [isLoaded] = useState(false);
-  const [isStockLoading, setIsStockLoading] = useState(true);
-  const [isCryptoLoading, setIsCryptoLoading] = useState(true);
-  const [stockItems] = useState([]);
-  const [cryptoItems] = useState([]);
-
-  /*
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isStockLoading, setIsStockLoading] = useState(true);
   const [isCryptoLoading, setIsCryptoLoading] = useState(true);
   const [stockItems, setStockIItems] = useState([]);
   const [cryptoItems, setCryptoItems] = useState([]);
-  //*/
 
   function addIdsToRows(rows) {
     if (rows === undefined) {
@@ -127,7 +118,7 @@ function SignalDataGrid() {
 
   function fetchUpdateStock() {
     setIsStockLoading(true);
-    /*
+    //*
     fetch(
       "https://7tj23qrgl1.execute-api.us-east-2.amazonaws.com/test/moves?market=stock",
       {
@@ -158,7 +149,7 @@ function SignalDataGrid() {
 
   function fetchUpdateCrypto() {
     setIsCryptoLoading(true);
-    /*
+    //*
     fetch(
       "https://7tj23qrgl1.execute-api.us-east-2.amazonaws.com/test/moves?market=binance",
       {
@@ -237,10 +228,8 @@ function SignalDataGrid() {
           { isLoaded? <IsLoaded /> : null }
         </div>
         <TabPanel>
-          <DataGridWithRows rows={stockItems} />
         </TabPanel>
         <TabPanel>
-          <DataGridWithRows rows={cryptoItems} />
         </TabPanel>
       </Tabs>
     </Styles>
