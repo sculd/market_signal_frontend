@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-//import { DataGrid  } from '@material-ui/data-grid';
-
-/*
+import { DataGrid  } from '@material-ui/data-grid';
+//import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+  
 const columns = [
     {
         field: 'datetime_et',
@@ -51,7 +51,19 @@ const columns = [
     },
     ];
 
+/*
+const theme = createMuiTheme({
+    typography: {
+        fontSize: 12
+    },
+});
+//*/
+
 function DataGridWithRows({ rows }) {
+    /*
+    <MuiThemeProvider theme={theme}>
+    </MuiThemeProvider>
+    //*/
     return (
       <div style={{ height: 700, width: '100%' }}>
         <DataGrid rows={rows} columns={columns} pageSize={10} 
@@ -65,7 +77,6 @@ function DataGridWithRows({ rows }) {
       </div>
     );
   }
-//*/
 
 const Styles = styled.div`
   padding: 1rem;
@@ -209,7 +220,7 @@ function SignalDataGrid() {
   const IsLoaded = () => (
     <div></div>
   )
-  
+
   return (
     <Styles>
       <Tabs>
@@ -224,8 +235,10 @@ function SignalDataGrid() {
           { isLoaded? <IsLoaded /> : null }
         </div>
         <TabPanel>
+          <DataGridWithRows rows={stockItems} />
         </TabPanel>
         <TabPanel>
+          <DataGridWithRows rows={cryptoItems} />
         </TabPanel>
       </Tabs>
     </Styles>
