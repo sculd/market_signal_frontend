@@ -20,7 +20,7 @@ const columns = [
       headerName: 'Current',
       type: 'number',
       valueGetter: ({ value }) => value,
-      valueFormatter: ({ value }) => "$" + new String(Number(value).toFixed(1)),
+      valueFormatter: ({ value }) => "$" + String(Number(value).toFixed(1)),
       width: 90,
     },
     {
@@ -34,7 +34,7 @@ const columns = [
       headerName: 'Threshold',
       type: 'number',
       valueGetter: ({ value }) => Number(value * 100).toFixed(2),
-      valueFormatter: ({ value }) => new String(value) + "%",
+      valueFormatter: ({ value }) => String(value) + "%",
       width: 100,
     },
     {
@@ -195,20 +195,30 @@ function SignalDataGrid() {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     fetchUpdateStock();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   
   useEffect(() => {
     fetchUpdateCrypto();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
     
   const Loading = () => (
     <div>
       Loading...
     </div>
+  )
+
+  const Error = () => (
+    <div>
+      Error loading.
+    </div>
+  )
+
+  const IsLoaded = () => (
+    <div></div>
   )
 
   return (
@@ -221,6 +231,8 @@ function SignalDataGrid() {
     
         <div>
           { isStockLoading || isCryptoLoading ? <Loading /> : null }
+          { error ? <Error />  : null }
+          { isLoaded? <IsLoaded /> : null }
         </div>
         <TabPanel>
           <DataGridWithRows rows={stockItems} />
