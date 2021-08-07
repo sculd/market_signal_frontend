@@ -118,7 +118,6 @@ function SignalDataGrid() {
 
   function fetchUpdateStock() {
     setIsStockLoading(true);
-    //*
     fetch(
       "https://7tj23qrgl1.execute-api.us-east-2.amazonaws.com/test/moves?market=stock",
       {
@@ -144,12 +143,10 @@ function SignalDataGrid() {
         setStockIItems(addIdsToRows(data));
       }
     });
-    //*/
   }
 
   function fetchUpdateCrypto() {
     setIsCryptoLoading(true);
-    //*
     fetch(
       "https://7tj23qrgl1.execute-api.us-east-2.amazonaws.com/test/moves?market=binance",
       {
@@ -175,7 +172,6 @@ function SignalDataGrid() {
         setCryptoItems(addIdsToRows(data));
       }
     });
-    //*/
   }
 
   function onInterval() {
