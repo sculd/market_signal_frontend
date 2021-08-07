@@ -1,6 +1,6 @@
 import React from "react";
 //import { useState, useEffect } from "react";
-//import styled from "styled-components";
+import styled from "styled-components";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 //import { DataGrid  } from '@material-ui/data-grid';
@@ -65,6 +65,7 @@ function DataGridWithRows({ rows }) {
       </div>
     );
   }
+//*/
 
 const Styles = styled.div`
   padding: 1rem;
@@ -94,7 +95,6 @@ const Styles = styled.div`
     }
   }
 `;
-//*/
 
 function SignalDataGrid() {
   /*
