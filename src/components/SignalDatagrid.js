@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { DataGrid  } from '@material-ui/data-grid';
-//import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
   
 const columns = [
     {
