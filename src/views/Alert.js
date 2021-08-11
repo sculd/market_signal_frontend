@@ -174,7 +174,7 @@ const Alert = () => {
                     <tr key={"alert_" + i}>
                         <th scope="row">{i}</th>
                         <td>{alert.alert_name}</td>
-                        <td>{alert.summary}</td>
+                        <td>{alert.description}</td>
                         <td>
                             <AlertBuilder alert={alert} after_ok={handlePost}>edit</AlertBuilder>
                         </td>
