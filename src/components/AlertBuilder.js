@@ -121,6 +121,7 @@ const AlertBuilder = (props) => {
 
   const alertApiOrigin = "https://ynpz1kpon8.execute-api.us-east-2.amazonaws.com/test";
   const {
+    isAuthenticated,
     getAccessTokenSilently,
     loginWithPopup,
     getAccessTokenWithPopup,
@@ -341,7 +342,13 @@ const AlertBuilder = (props) => {
         
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={handleOk}>Ok</Button>{' '}
+          {isAuthenticated && (
+          <Button color="primary" onClick={handleOk}>Ok</Button>
+          )}
+          {!isAuthenticated && (
+          <Button color="primary" disabled>Ok</Button>
+          )}
+          {' '}
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
       </Modal>

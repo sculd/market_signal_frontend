@@ -25,6 +25,10 @@ const Alert = () => {
 
     const callApi = async () => {
         if (!isAuthenticated) {
+            setApiState({
+              ...apiState,
+              isLoading: false,
+            });
             return;
         }
 
