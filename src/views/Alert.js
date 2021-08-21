@@ -13,7 +13,9 @@ const Alert = () => {
       error: null,
       isLoading: false,
     });
+    const [subscriptionData, setSubscriptionData] = useState({});
   
+    const customerApiBaseUrl = "https://v0hauynbz7.execute-api.us-east-2.amazonaws.com/test"
     const alertApiOrigin = "https://ynpz1kpon8.execute-api.us-east-2.amazonaws.com/test";
     const {
       isAuthenticated,
@@ -23,7 +25,23 @@ const Alert = () => {
       user,
     } = useAuth0();
 
-    const callApi = async () => {
+    const updateSubscriptionData = async (user) => {
+      if (!isAuthenticated) {
+          return
+      }
+      const getUserApiPath = (user) => `${customerApiBaseUrl}/users/${user?.sub?.split('auth0|').slice(-1)[0]}/stripe_customer?email=${user?.email}`;    
+      const token = await getAccessTokenSilently();
+      const response = await fetch(getUserApiPath(user), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          }
+        });
+      const response_json = await response.json();
+      setSubscriptionData(response_json);
+    };
+
+    const updateAlerts = async () => {
         if (!isAuthenticated) {
             setApiState({
               ...apiState,
@@ -73,7 +91,7 @@ const Alert = () => {
           });
         }
     
-        await callApi();
+        await updateAlerts();
     };
     
     const handleLoginAgain = async () => {
@@ -90,7 +108,7 @@ const Alert = () => {
           });
         }
     
-        await callApi();
+        await updateAlerts();
     };
     
     const handle = (e, fn) => {
@@ -103,15 +121,19 @@ const Alert = () => {
             ...apiState,
             isLoading: true,
           });
-        callApi();
+        updateAlerts();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    useEffect(() => {
+      updateSubscriptionData(user);
+    }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const handlePost = (alert) => {
         setApiState({
             ...apiState,
             isLoading: true,
           });
-        callApi();
+        updateAlerts();
     };
 
     const handleDelete = (alert) => {
@@ -119,7 +141,7 @@ const Alert = () => {
             ...apiState,
             isLoading: true,
           });
-        callApi();
+        updateAlerts();
     };
 
     return (

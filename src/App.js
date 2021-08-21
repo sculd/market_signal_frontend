@@ -7,9 +7,12 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import Home from "./views/Home";
 import Alert from "./views/Alert";
+import Subscription from "./views/Subscription";
 import About from "./views/About";
 import Profile from "./views/Profile";
 import ExternalApi from "./views/ExternalApi";
+import Terms from "./views/Terms";
+import Privacy from "./views/Privacy";
 import { useAuth0 } from "@auth0/auth0-react";
 import history from "./utils/history";
 
@@ -39,9 +42,12 @@ const App = () => {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/alert" exact component={Alert} />
+            <Route path="/subscription" exact component={Subscription} />
             <Route path="/about" exact component={About} />
             <Route path="/profile" component={Profile} />
             <Route path="/external-api" component={ExternalApi} />
+            <Route path="/terms" component={Terms} />
+            <Route path="/privacy" component={Privacy} />
           </Switch>
         </Container>
         <Footer />
