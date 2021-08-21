@@ -7,6 +7,7 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import Home from "./views/Home";
 import Alert from "./views/Alert";
+import Subscription from "./views/Subscription";
 import About from "./views/About";
 import Profile from "./views/Profile";
 import ExternalApi from "./views/ExternalApi";
@@ -39,6 +40,7 @@ const App = () => {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/alert" exact component={Alert} />
+            <Route path="/subscription" exact component={Subscription} />
             <Route path="/about" exact component={About} />
             <Route path="/profile" component={Profile} />
             <Route path="/external-api" component={ExternalApi} />

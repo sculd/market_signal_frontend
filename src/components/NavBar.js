@@ -63,6 +63,16 @@ const NavBar = () => {
                   Alert
                 </NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink
+                  tag={RouterNavLink}
+                  to="/subscription"
+                  exact
+                  activeClassName="router-link-exact-active"
+                >
+                  Subscription
+                </NavLink>
+              </NavItem>
               {isAuthenticated && (
                 <NavItem>
                   <NavLink

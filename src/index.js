@@ -5,7 +5,10 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { Auth0Provider } from "@auth0/auth0-react";
 import history from "./utils/history";
+import { getUserMetadata } from "./utils/userProfile";
 import { getConfig } from "./config";
+
+console.log('getUserMetadata:', getUserMetadata)
 
 const onRedirectCallback = (appState) => {
   history.push(

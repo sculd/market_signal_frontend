@@ -47,4 +47,9 @@ app.get("/api/external", checkJwt, (req, res) => {
   });
 });
 
+app.get('/checkout', async (req, res) => {
+  console.log('checkout')
+  res.send(JSON.stringify({ message: 'Hello World!' }))
+})
+
 app.listen(port, () => console.log(`API Server listening on port ${port}`));
