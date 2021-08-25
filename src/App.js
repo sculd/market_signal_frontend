@@ -13,6 +13,7 @@ import Profile from "./views/Profile";
 import ExternalApi from "./views/ExternalApi";
 import Terms from "./views/Terms";
 import Privacy from "./views/Privacy";
+import EULA from "./views/EULA";
 import { useAuth0 } from "@auth0/auth0-react";
 import history from "./utils/history";
 
@@ -48,6 +49,7 @@ const App = () => {
             <Route path="/external-api" component={ExternalApi} />
             <Route path="/terms" component={Terms} />
             <Route path="/privacy" component={Privacy} />
+            <Route path="/eula" component={EULA} />
           </Switch>
         </Container>
         <Footer />

@@ -1,174 +1,84 @@
 import React, { Fragment } from "react";
 import { Container } from "reactstrap";
+import { siteName, siteUrl, companyName, contactEmail } from "../utils/constants";
 
-const Privacy = () => (
+const Privacy = () => {
+  return (  
   <Container className="mb-5">
     <Fragment>
       <div>
-      <h1>Privacy</h1>
-      Privacy Policy of marketsignal
-      This Application collects some Personal Data from its Users.
-
-      <h4>
-      Data Controller and Owner
-      </h4>
-      Market Signal
-
-      Owner contact email: dummy@example.org
-
-      <h4>
-      Types of Data collected
-      </h4>
-      Among the types of Personal Data that this Application collects, by itself or through third parties, there are: Cookies and Usage Data.
-
-      Other Personal Data collected may be described in other sections of this privacy policy or by dedicated explanation text contextually with the Data collection.
-
-      The Personal Data may be freely provided by the User, or collected automatically when using this Application.
-
-      Any use of Cookies - or of other tracking tools - by this Application or by the owners of third party services used by this Application, unless stated otherwise, serves to identify Users and remember their preferences, for the sole purpose of providing the service required by the User.
-
-      Failure to provide certain Personal Data may make it impossible for this Application to provide its services.
-
-      Users are responsible for any Personal Data of third parties obtained, published or shared through this Application and confirm that they have the third party's consent to provide the Data to the Owner.
-
-      <h4>
-      Mode and place of processing the Data
-      </h4>
-      <h5>
-      Methods of processing
-      </h5>
-      The Data Controller processes the Data of Users in a proper manner and shall take appropriate security measures to prevent unauthorized access, disclosure, modification, or unauthorized destruction of the Data.
-
-      The Data processing is carried out using computers and/or IT enabled tools, following organizational procedures and modes strictly related to the purposes indicated. In addition to the Data Controller, in some cases, the Data may be accessible to certain types of persons in charge, involved with the operation of the site (administration, sales, marketing, legal, system administration) or external parties (such as third party technical service providers, mail carriers, hosting providers, IT companies, communications agencies) appointed, if necessary, as Data Processors by the Owner. The updated list of these parties may be requested from the Data Controller at any time.
-
-      <h4>
-      Place
-      </h4>
-      The Data is processed at the Data Controller's operating offices and in any other places where the parties involved with the processing are located. For further information, please contact the Data Controller.
-
-      <h4>
-      Retention time
-      </h4>
-      The Data is kept for the time necessary to provide the service requested by the User, or stated by the purposes outlined in this document, and the User can always request that the Data Controller suspend or remove the data.
-
-      <h4>
-      The use of the collected Data
-      </h4>
-      The Data concerning the User is collected to allow the Owner to provide its services, as well as for the following purposes: Analytics.
-
-      The Personal Data used for each purpose is outlined in the specific sections of this document.
-
-      Detailed information on the processing of Personal Data
-      Personal Data is collected for the following purposes and using the following services:
-
-      <h4>
-      Analytics
-      </h4>
-      The services contained in this section enable the Owner to monitor and analyze web traffic and can be used to keep track of User behavior.
-
-      <h4>
-      Google Analytics (Google Inc.)
-      </h4>
-      Google Analytics is a web analysis service provided by Google Inc. (“Google”). Google utilizes the Data collected to track and examine the use of this Application, to prepare reports on its activities and share them with other Google services.
-
-      Google may use the Data collected to contextualize and personalize the ads of its own advertising network.
-
-      Personal Data collected: Cookies and Usage Data.
-
-      Place of processing: US – Privacy Policy – Opt Out
-
-      <h4>
-      Additional information about Data collection and processing
-      </h4>
-      <h5>
-      Legal action
-      </h5>
-      The User's Personal Data may be used for legal purposes by the Data Controller, in Court or in the stages leading to possible legal action arising from improper use of this Application or the related services.
-
-      The User declares to be aware that the Data Controller may be required to reveal personal data upon request of public authorities.
-
-      <h4>
-      Additional information about User's Personal Data
-      </h4>
-      In addition to the information contained in this privacy policy, this Application may provide the User with additional and contextual information concerning particular services or the collection and processing of Personal Data upon request.
-
-      <h4>
-      System logs and maintenance
-      </h4>
-      For operation and maintenance purposes, this Application and any third party services may collect files that record interaction with this Application (System logs) or use for this purpose other Personal Data (such as IP Address).
-
-      <h4>
-      Information not contained in this policy
-      </h4>
-      More details concerning the collection or processing of Personal Data may be requested from the Data Controller at any time. Please see the contact information at the beginning of this document.
-
-      <h4>
-      The rights of Users
-      </h4>
-      Users have the right, at any time, to know whether their Personal Data has been stored and can consult the Data Controller to learn about their contents and origin, to verify their accuracy or to ask for them to be supplemented, cancelled, updated or corrected, or for their transformation into anonymous format or to block any data held in violation of the law, as well as to oppose their treatment for any and all legitimate reasons. Requests should be sent to the Data Controller at the contact information set out above.
-
-      This Application does not support “Do Not Track” requests.
-
-      To determine whether any of the third party services it uses honor the “Do Not Track” requests, please read their privacy policies.
-
-      <h4>
-      Changes to this privacy policy
-      </h4>
-      The Data Controller reserves the right to make changes to this privacy policy at any time by giving notice to its Users on this page. It is strongly recommended to check this page often, referring to the date of the last modification listed at the bottom. If a User objects to any of the changes to the Policy, the User must cease using this Application and can request that the Data Controller remove the Personal Data. Unless stated otherwise, the then-current privacy policy applies to all Personal Data the Data Controller has about Users.
-
-      <h4>
-      Definitions and legal references
-      </h4>
-      <h5>
-      Personal Data (or Data)
-      </h5>
-      Any information regarding a natural person, a legal person, an institution or an association, which is, or can be, identified, even indirectly, by reference to any other information, including a personal identification number.
-
-      <h5>
-      Usage Data
-      </h5>
-      Information collected automatically from this Application (or third party services employed in this Application), which can include: the IP addresses or domain names of the computers utilized by the Users who use this Application, the URI addresses (Uniform Resource Identifier), the time of the request, the method utilized to submit the request to the server, the size of the file received in response, the numerical code indicating the status of the server's answer (successful outcome, error, etc.), the country of origin, the features of the browser and the operating system utilized by the User, the various time details per visit (e.g., the time spent on each page within the Application) and the details about the path followed within the Application with special reference to the sequence of pages visited, and other parameters about the device operating system and/or the User's IT environment.
-
-      <h5>
-      User
-      </h5>
-      The individual using this Application, which must coincide with or be authorized by the Data Subject, to whom the Personal Data refers.
-
-      <h5>
-      Data Subject
-      </h5>
-      The legal or natural person to whom the Personal Data refers.
-
-      <h5>
-      Data Processor (or Data Supervisor)
-      </h5>
-      The natural person, legal person, public administration or any other body, association or organization authorized by the Data Controller to process the Personal Data in compliance with this privacy policy.
-
-      <h5>
-      Data Controller (or Owner)
-      </h5>
-      The natural person, legal person, public administration or any other body, association or organization with the right, also jointly with another Data Controller, to make decisions regarding the purposes, and the methods of processing of Personal Data and the means used, including the security measures concerning the operation and use of this Application. The Data Controller, unless otherwise specified, is the Owner of this Application.
-
-      <h5>
-      This Application
-      </h5>
-      The hardware or software tool by which the Personal Data of the User is collected.
-
-      <h5>
-      Cookies
-      </h5>
-      Small piece of data stored in the User's device.
-
-      <h5>
-      Legal information
-      </h5>
-      Notice to European Users: this privacy statement has been prepared in fulfillment of the obligations under Art. 10 of EC Directive n. 95/46/EC, and under the provisions of Directive 2002/58/EC, as revised by Directive 2009/136/EC, on the subject of Cookies.
-
-      This privacy policy relates solely to this Application.
-
+      <p class="subtitle">Legal</p>
+      <h1 class="title">Privacy Policy</h1>
+      <p class="content">READ THIS PRIVACY POLICY CAREFULLY BEFORE USING OR OBTAINING ANY MATERIALS, INFORMATION, PRODUCTS OR SERVICES THROUGH THIS SITE.</p>
+      <p class="content">{siteName}, Inc. is a Delaware corporation operating under the name {siteName} (“{siteName}” the “Company,” "{companyName}", “we,” “us,” “our”). The Company takes your privacy seriously. The Company pledges to follow the provisions of this Privacy Policy in order to protect your privacy rights. This Privacy Policy forms part of the {siteName} Terms of Service and is incorporated by reference therein.</p>
+      <p class="content">This Privacy Policy (“Policy”) outlines our general policy and practices for protecting your private information on the {siteUrl} website and related services (collectively, the “Site”). It includes the types of information we gather, how we use it, and the choices individuals have regarding our use of their information. This Policy applies to all personal information received by us whether in electronic, written, or verbal format. Personal information is information that can be associated with a specific person and used to identify that person. Personal information does not include information that has been anonymized so that it does not identify a specific individual, which may be used for any legal purpose.</p>
+      <p class="content">The Company reserves the right to modify this Policy at any time and will do so from time to time. Each modification shall be effective upon its posting to the Site. Your continued use of the Site following any such modification constitutes your acceptance of any changes to this Policy. It is therefore important that you review this Policy regularly. If you have any questions concerning this Policy please contact the Company at {contactEmail}</p>
+      <p class="content">
+        <ol>
+          <li>Scope
+            <p class="content">This Policy covers all of the Site. However, it does not apply to entities that the Company does not own or control including advertisers or developers of content. The Company may include third-party links on the Site. These third-party sites are governed by their own privacy policies and not this Policy. We therefore have no responsibility or liability for the content and activities of these third-party sites. Please check the privacy policy of any third-party site you interact with on or off the Site.</p>
+          </li>
+          <li>Information Company Collects About You
+            <p class="content">Each time a user accesses the Site they receive a “cookie” from us. We use cookies (small pieces of data stored for an extended period of time on a computer, mobile phone, or other device) to make the Site easier to use, and to protect both you and the Company. These cookies give the Company information about your use of the Site. You may remove or block cookies using the settings in your browser, but doing so may impact your ability to use the Site. We may also use pixels, widgets and other tools to gather such information to improve the experience of the website or mobile application.</p>
+            <p class="content">We may contract with third-party service providers to assist us in better understanding our site visitors. These service providers are not permitted to use the information collected on our behalf except to help us conduct and improve our business.</p>
+            <p class="content">When you access the Site from a computer, mobile phone, or other device, we may collect information from that device about your browser type, location, and IP address, as well as the pages you visit and the date and time you access the Site.</p>
+            <p class="content">We may keep track of some of the actions you take on the Site including the user profiles and the analyses you upload. We may also ask you about your personal and investing habits. Even if you do not provide this information, we may obtain it from messages you post, your profile, or the analyses you post, and the analyses you view or purchase. We may retain the details of connections or transactions you make on the Site.</p>
+            <p class="content">We may collect information on your use of the site, such as pages visited, links clicked, text entered, and mouse movements, as well as information more commonly collected such as the referring URL, browser, operating system, and IP address. We use publicly available sources to approximate your geographic region and Internet Service Provider based on your IP address. We also collect information on your usage of our APIs and Services. We collect information that may be personally identifiable, such as IP addresses. Also, you may choose to interact with the Site in a way that results in your providing Personal Information to us, such as giving us your name and email address when signing up for a free trial of the Services or creating an account to license the Services we provide.</p>
+            <p class="content">We may collect information from the ads you view when you use the Site. We may also keep track of links you click on in emails you receive from us. This is done to increase the relevancy of the ads you see.</p>
+            <p class="content">We may also gather information about you from the content other Users post on the Site. Some of this information may contain personal information.</p>
+          </li>
+          <li>Information You Provide to Company
+            <p class="content">As part of the process to become a user of {siteName}, we require you to provide your username, email address, and a password. You may voluntarily provide other information including, but not limited to, mailing address, phone number, place of employment, past employment and education history, etc.</p>
+            <p class="content">While using the Site you may provide text, files, images, photos, videos, location data, or any other materials (collectively “User Content” or “Content”) to the Company by uploading, posting, or publishing the User Content on the Site. User Content you place on the Site may contain a picture of your face.</p>
+            <p class="content">We may retain the details of connections or transactions you make on the Site.</p>
+            <p class="content">Use of the Site may include you posting Content. Some of this Content is placed in a public forum. Any information in a public forum is accessible by anyone, including people who are not users of the Site. Please keep this in mind when posting Content on the Site.</p>
+          </li>
+          <li>Information You Provide to Other Users
+            <p class="content">You may also interact directly with other Users of the Site. When you interact with others on the Site you may provide other personal information about yourself such as political or topical views, religious affiliation, or marital status. Please use care when disclosing private information to other Users of the Site. Be aware they may share information you give them with other Users you may not know. They may also share the information outside the Site without your prior approval. We do not have control over the actions of our Users, and accept no responsibility or liability for their actions. We do not require Users to undergo a screening process and make no representations or warranties as to the truthfulness of information Users provide. Please keep this fact in mind when using the Site.</p>
+          </li>
+          <li>How We Use Your Personal Information
+            <p class="content">We use the information you are required to provide to become a user in order to insure you are over the age of eighteen (18). The Site is not meant to be used by anyone under the age of eighteen. If you are under eighteen, please do not attempt to register for {siteName} or send us any personal information. If you believe someone has submitted information from someone under eighteen, contact us and we will remove the information as soon as possible.</p>
+            <p class="content">We may share non-personally identifying information we collect from your activity on the Site with other users, news agencies and other third parties in order for them to better understand investment trends and patterns specific to {siteName} Users.</p>
+            <p class="content">We will use the information we collect to provide services and features to you. We will also use the information to measure and improve the Site, and to provide you with customer support.</p>
+            <p class="content">We may contact you with service-related announcements from time to time. We may also update you about new product offerings and communications relevant to your use of the Site. We may include Content in the emails we send to you. You may opt-out of certain communications by signing into your account and changing your communication preferences. You can also remove yourself from communication by clicking on an “unsubscribe” hyperlink contained in every communication.</p>
+            <p class="content">We may use information about you that we collect from other Users to supplement information in your account. This includes activities like linking your account to a post placed by another User which references Content placed you. We may allow other Users to use the contact information they have about you, such as your username, to find you.</p>
+            <p class="content">Certain software applications and applets transmit data to us. We may not make a formal disclosure if we believe our collection of and use of the information is the obvious purpose of the Site or its related application. If it is not obvious that we are collecting or using such information, the first time you provide the information we will disclose that we are collecting it from you.</p>
+            <p class="content">We may use the information we collect to prevent potential illegal activities. We also use a variety of methods to detect and address anomalous activity and screen content to prevent abuse.</p>
+          </li>
+          <li>How We Share Your Information
+            <p class="content">The Company may share your information with third-parties when we believe doing so is permitted by you, reasonably necessary to offer our services, or when legally required to do so. We will not share your information with third-parties in a way we think violates your privacy. The following are examples of ways we may share your information, however, this list is informative not exhaustive.</p>
+            <p class="content">Certain information you provide to us will be shared by using our search function. This allows other Users to locate your profile and User Content, and it allows new users to find people they know on the Site. We provide some public information to search engines. This information allows search engines to locate the Site. It also allows people to locate you on the Site using a major search engine. This does not mean all information you post on the Site may be accessed using a search engine. From time-to-time {siteName} may offer contests to Users of the Site. All contests offered by {siteName} will be governed by the {siteName} Terms of Use and this Policy and may be governed by additional terms. Contests may be sponsored by third-party organizations and the Company may share information you submit as part of the contest to sponsors. Any information that you choose to submit as part of a Contest submission may be disclosed to third-party sponsors and other individuals as set out in the Contest terms. We may also share information when we have a good faith belief it is necessary to prevent fraud or other illegal activity, to prevent imminent bodily harm, or to protect you and ourselves from a third-party violation of the Terms of Service of the Site. This may include sharing information with other companies, lawyers, and courts or other government entities. We may disclose information pursuant to subpoenas, court orders, or other requests (including criminal and civil matters) if we have a good faith belief that the response is required by law. This may include requests from jurisdictions outside of the United States if the Company has a good faith belief that the response is required under the local law in that jurisdiction, is applicable to users from that jurisdiction, and is consistent with generally accepted international standards. Company may disclose analyzed data in the form of purchasing trends or statistical data. No personally identifiable attributes will be attached to this disclosure.</p>
+          </li>
+          <li>Business or Asset Transfer or Sale
+            <p class="content">The Company may be sold, sell or buy businesses or assets of businesses, or merge with another business. In such transactions, personal information generally is one of the transferred business assets. Also, in the event that the Company, a line of business of the Company, or substantially all of our assets are transferred, personal information may be one of the transferred assets. If any such change in ownership or control of your personal information will take place, we will make a reasonable effort to provide notice on the Site and via your most recently provided email address.</p>
+          </li>
+          <li>Security
+            <p class="content">Company shall only process personal information in a way that is compatible with and relevant to the purpose for which it was collected or has been authorized. To the extent necessary for those purposes, Company shall take reasonable steps to ensure that personal information is accurate, complete, current, and reliable for its intended use.</p>
+          </li>
+          <li>Data Integrity
+            <p class="content">The Company reserves the right to modify this Policy at any time and will do so from time to time. Each modification shall be effective upon its posting to the Site. Your continued use of the Site following any such modification constitutes your acceptance of any changes to this Policy. It is therefore important that you review this Policy regularly. If you have any questions concerning this Policy please contact the Company at {contactEmail}</p>
+          </li>
+          <li>Access
+            <p class="content">You can review, update, and change some of your personal information – including your email address and password – in your profile at any time. We will allow you access to your personal information and allow you to correct, amend, or delete inaccurate information. For access requests please contact {contactEmail}. Access will not be allowed where the burden or expense of providing access would be disproportionate to the risks to your privacy or where personal rights other than your own would be violated.</p>
+          </li>
+          <li>"Do Not Track" Disclosures
+            <p class="content">Certain state laws require us to indicate whether we honor “Do Not Track” settings in your browser concerning targeted advertising. We adhere to the standards set out in this Privacy Policy and do not monitor or follow any Do Not Track browser requests.</p>
+          </li>
+          <li>Children's Policy
+            <p class="content">The Children’s Online Privacy Protection Act was created to protect children under the age of 13 from unsuspecting acts or practices in conjunction with collecting, using, and disclosing any information about them. Our Site is not intended for anyone under the age of 13. If you are under 13, do not use or provide any information on or through our Site. If we learn we have collected or received personal information from a child under 13 without verification of parental consent, we will delete that information. If you are a parent or guardian or otherwise believe we might have any information from or about a child under 13, please contact us so that we can delete the child's information. The Site will never knowingly accept, collect, maintain or use any information from a child under the age of 13. If a child whom we know to be under the age of 13 sends personal information to us online, we will only use that information to respond directly to that child or notify parents.</p>
+          </li>
+          <li>Data Protection Principles
+            <p class="content">The Company is committed to processing data in accordance with its responsibilities under the GDPR. Article 5 of the GDPR requires that personal data shall be (i) processed lawfully, fairly and in a transparent manner in relation to individuals; (ii) collected for specified, explicit and legitimate purposes and not further processed in a manner that is incompatible with those purposes; further processing for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes shall not be considered to be incompatible with the initial purposes; (iii) adequate, relevant and limited to what is necessary in relation to the purposes for which they are processed; (iv) accurate and, where necessary, kept up to date; every reasonable step must be taken to ensure that personal data that are inaccurate, having regard to the purposes for which they are processed, are erased or rectified without delay; (v) kept in a form which permits identification of data subjects for no longer than is necessary for the purposes for which the personal data are processed; personal data may be stored for longer periods insofar as the personal data will be processed solely for archiving purposes in the public interest, scientific or historical research purposes or statistical purposes subject to implementation of the appropriate technical and organisational measures required by the GDPR in order to safeguard the rights and freedoms of individuals; and (vi) processed in a manner that ensures appropriate security of the personal data, including protection against unauthorised or unlawful processing and against accidental loss, destruction or damage, using appropriate technical or organisational measures.”</p>
+          </li>
+          <li>Other
+            <p class="content">By using the Site, you consent to having your personal information and data transferred to and processed in the United States. Please contact us with any questions or concerns regarding our policy at this address: {contactEmail}.</p>
+          </li>
+        </ol>
+      </p>    
       </div>
     </Fragment>
   </Container>
-);
+  );
+}
 
 export default Privacy;

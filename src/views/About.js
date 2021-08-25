@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 import { Container } from "reactstrap";
 
 const About = () => (
@@ -12,6 +13,15 @@ const About = () => (
       </p>
       <p>
           <a href="mailto:me@example.com">me@example.com</a>
+      </p>
+      <p>
+          <Link to="/terms">Terms of service</Link>
+      </p>
+      <p>
+          <Link to="/privacy">Privacy policy</Link>
+      </p>
+      <p>
+          <Link to="/eula">EULA</Link>
       </p>
       </div>
     </Fragment>

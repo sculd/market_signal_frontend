@@ -4,7 +4,6 @@ import { Alert, Button, Container, Row, Col, ListGroup, ListGroupItem } from "re
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import { isOnLightPlan, isOnPremiumPlan } from "../utils/userProfile";
 
-
 const Subscription = () => {
     const {
       isAuthenticated,
