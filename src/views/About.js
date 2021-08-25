@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Container } from "reactstrap";
+import { contactEmail } from "../utils/constants";
 
 const About = () => (
   <Container className="mb-5">
@@ -8,12 +9,12 @@ const About = () => (
       <div>
       <h1>About</h1>
       <p>
-          Market signal picker detects the big market movers in "real" time.
-          So that "you" can profit from the big opportunities.
+      Need Support?
       </p>
       <p>
-          <a href="mailto:me@example.com">me@example.com</a>
+      If you are looking for help with an existing account, please email {contactEmail}.          
       </p>
+      <h4>Legal</h4>
       <p>
           <Link to="/terms">Terms of service</Link>
       </p>
