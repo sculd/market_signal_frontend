@@ -1,7 +1,7 @@
 /* eslint react/no-multi-comp: 0, react/prop-types: 0 */
 
 import React, { useState, useEffect } from 'react';
-import { Alert, Button, FormGroup, Spinner, Input, Label, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Alert, Button, FormGroup, Spinner, CustomInput, Input, Label, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap';
 import Select from 'react-select'
 import { useAuth0 } from "@auth0/auth0-react";
@@ -57,18 +57,23 @@ const AlertBuilder = (props) => {
   const [window, setwindow] = React.useState(valueToOption(alert?.window_size_minutes, options_window));
   const [threshold, setThreshold] = React.useState(valueToOption(alert?.threshold_percent, options_threshold));
   const [moveDirection, setMoveDirection] = React.useState(valueToOption(alert?.move_type, options_move_direction));
-  const [destinationType, setDestinationType] = React.useState(valueToOption(alert?.notification_destination_type, options_destinatino_type));
-  const [destination, setDestination] = React.useState(alert?.notification_destination || '');
+  const [destinatinoTypeEmailChecked, setDestinatinoTypeEmailChecked] = React.useState(true);
+  const [destinatinoTypeSMSChecked, setDestinatinoTypeSMSChecked] = React.useState(false);
+  const [emailDestination, setEmailDestination] = React.useState(alert?.notification_destination || '');
+  const [smsDestination, setSmsDestination] = React.useState(alert?.notification_destination || '');
 
   function resetStates() {
     setAlertName(alert?.alert_name || '');
     setDescription(alert?.description || '');
     setSymbol(alert?.symbol || '');
+    setAllSymbolChecked(alert?.setAllSymbol || false);
     setwindow(valueToOption(alert?.window_size_minutes, options_window));
     setThreshold(valueToOption(alert?.threshold_percent, options_threshold));
     setMoveDirection(valueToOption(alert?.move_type, options_move_direction));
-    setDestinationType(valueToOption(alert?.notification_destination_type, options_destinatino_type));
-    setDestination(alert?.notification_destination || '');
+    setDestinatinoTypeEmailChecked(true && true)
+    setDestinatinoTypeSMSChecked(alert?.notification_to_sms || false)
+    setEmailDestination(alert?.notification_email || '');
+    setSmsDestination(alert?.notification_sms || '');
     }
 
   // Form change handler
@@ -85,13 +90,24 @@ const AlertBuilder = (props) => {
   };
 
   const handleAllSymbolToggle = (event) => {
-    console.log('event:', event)
-    console.log('event.target.checked:', event.target.checked)
+    setAllSymbolChecked(event.target.checked);
   }
 
-  const handleDestinationChange = (event) => {
-    setDestination(event.target.value);
-};
+  const handleDestinationTypeEmailToggle = (event) => {
+    setDestinatinoTypeEmailChecked(event.target.checked);
+  }
+
+  const handleDestinationTypeSMSToggle = (event) => {
+    setDestinatinoTypeSMSChecked(event.target.checked);
+  }
+
+  const handleEmailDestinationChange = (event) => {
+    setEmailDestination(event.target.value);
+  };
+
+  const handleSMSDestinationChange = (event) => {
+    setSmsDestination(event.target.value);
+  };
 
   // Select form change handler
   const handleWindowChange = (event) => {
@@ -104,10 +120,6 @@ const AlertBuilder = (props) => {
 
   const handleMoveDirectionChange = (event) => {
         setMoveDirection(event.value);
-  };
-
-  const handleDestinationTypeChange = (event) => {
-        setDestinationType(event.value);
   };
 
   // API
@@ -149,8 +161,10 @@ const AlertBuilder = (props) => {
         time_window_minutes: window.value,
         threshold_percent: threshold.value,
         move_type: moveDirection.value,
-        notification_destination_type: destinationType.value,
-        notification_destination: destination
+        notification_to_email: destinatinoTypeEmailChecked,
+        notification_email: emailDestination,
+        notification_to_sms: destinatinoTypeSMSChecked,
+        notification_sms: smsDestination,
       }
       const response = await fetch(`${alertApiOrigin}/users/${user.sub.split("auth0|").pop()}/alerts/${alert?.alert_id || ''}`, {
         headers: {
@@ -160,13 +174,13 @@ const AlertBuilder = (props) => {
         body: JSON.stringify(body)
       });
 
-      const responseData = await response.json();
       var apiError = "";
       const isApiError = response.status >= 400;
       if (isApiError) {
         apiError = responseData;
       }
 
+      const responseData = await response.json();
       setApiState({
         ...apiState,
         showResult: true,
@@ -300,11 +314,11 @@ const AlertBuilder = (props) => {
             <FormGroup row>
                 <Label sm="2">Symbol:</Label>
                 <Col sm="6">
-                    <Input type="text" defaultValue={symbol} onChange={handleSymbolChange} />
+                    <Input type="text" defaultValue={symbol} onChange={handleSymbolChange} disabled={allSymbolChecked} />
                 </Col>
                 <Label check sm="4">
                   <Input type="checkbox" onChange={handleAllSymbolToggle} disabled={!allowWildcardSymbol} />
-                  All Symbols{" "}<FontAwesomeIcon icon="question-circle" className="mr-3" />
+                  All Symbols{" "}<FontAwesomeIcon icon="question-circle" />
                 </Label>
             </FormGroup>
             <FormGroup row>
@@ -336,22 +350,25 @@ const AlertBuilder = (props) => {
                     />
                 </Col>
             </FormGroup>
+
             <FormGroup row>
                 <Col sm="2">Desination:</Col>
-                <Col sm="5"></Col>
-                <Col sm="5">
-                    <Select
-                        defaultValue={destinationType}
-                        onChange={handleDestinationTypeChange}
-                        options={options_destinatino_type}
-                    />
+            </FormGroup>
+
+            <FormGroup row>
+                <Col sm="4"><CustomInput type="checkbox" id="check_destination_type_email" label="E-mail" checked={destinatinoTypeEmailChecked} onChange={handleDestinationTypeEmailToggle} /></Col>
+                <Col sm="8">
+                    <Input type="text" placeholder="E-mail destination." defaultValue={emailDestination} onChange={handleEmailDestinationChange} disabled={!destinatinoTypeEmailChecked} />
                 </Col>
             </FormGroup>
-            <Row>
-                <Col>
-                    <Input type="text" placeholder="Alert destination." defaultValue={destination} onChange={handleDestinationChange} />
+
+            <FormGroup row>
+                <Col sm="4"><CustomInput type="checkbox" id="check_destination_type_sms" label="SMS" checked={destinatinoTypeSMSChecked} onChange={handleDestinationTypeSMSToggle} /></Col>
+                <Col sm="8">
+                    <Input type="text" placeholder="SMS destination." defaultValue={smsDestination} onChange={handleSMSDestinationChange} disabled={!destinatinoTypeSMSChecked} />
                 </Col>
-            </Row>
+            </FormGroup>
+
         </Container>
         
         </ModalBody>

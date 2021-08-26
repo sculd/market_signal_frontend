@@ -16,13 +16,13 @@ const About = () => (
       </p>
       <h4>Legal</h4>
       <p>
-          <Link to="/terms">Terms of service</Link>
+          <Link to="/terms" target="_blank">Terms of service</Link>
       </p>
       <p>
-          <Link to="/privacy">Privacy policy</Link>
+          <Link to="/privacy" target="_blank">Privacy policy</Link>
       </p>
       <p>
-          <Link to="/eula">EULA</Link>
+          <Link to="/eula" target="_blank">EULA</Link>
       </p>
       </div>
     </Fragment>

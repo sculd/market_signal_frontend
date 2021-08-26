@@ -26,6 +26,7 @@
     "@material-ui/x-license": "^4.0.0-alpha.36",
     "@stripe/react-stripe-js": "^1.4.1",
     "@stripe/stripe-js": "^1.17.0",
+    "bootstrap-icons": "^1.5.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-jwt": "^6.0.0",
