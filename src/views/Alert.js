@@ -5,6 +5,8 @@ import { Spinner, Table } from 'reactstrap';
 import { useAuth0 } from "@auth0/auth0-react";
 import AlertBuilder from "../components/AlertBuilder";
 import AlertDelete from "../components/AlertDelete";
+import { getIfAllowSMSAlert, getIfAllowWildcardSymbol } from "../utils/userProfile";
+import { checkoutApiBaseUrl } from "../utils/apiUrls";
 
 const Alert = () => {
     const [apiState, setApiState] = useState({
@@ -14,8 +16,9 @@ const Alert = () => {
       isLoading: false,
     });
     const [subscriptionData, setSubscriptionData] = useState({});
+    const [allowSMSAlert, setAllowSMSAlert] = useState(false);
+    const [allowWildcardSymbol, setAllowWildcardSymbol] = useState(false);
   
-    const customerApiBaseUrl = "https://v0hauynbz7.execute-api.us-east-2.amazonaws.com/test"
     const alertApiOrigin = "https://ynpz1kpon8.execute-api.us-east-2.amazonaws.com/test";
     const {
       isAuthenticated,
@@ -29,7 +32,7 @@ const Alert = () => {
       if (!isAuthenticated) {
           return
       }
-      const getUserApiPath = (user) => `${customerApiBaseUrl}/users/${user?.sub?.split('auth0|').slice(-1)[0]}/stripe_customer?email=${user?.email}`;    
+      const getUserApiPath = (user) => `${checkoutApiBaseUrl}/users/${user?.sub?.split('auth0|').slice(-1)[0]}/stripe_customer?email=${user?.email}`;    
       const token = await getAccessTokenSilently();
       const response = await fetch(getUserApiPath(user), {
         headers: {
@@ -39,6 +42,17 @@ const Alert = () => {
         });
       const response_json = await response.json();
       setSubscriptionData(response_json);
+    };
+
+    const updateAllowSMSAlert = async () => {
+      setAllowSMSAlert(getIfAllowSMSAlert(subscriptionData?.subscriptions));
+      console.log('subscriptionData:', subscriptionData)
+      console.log('allowSMSAlert:', allowSMSAlert)
+    };
+
+    const updateAllowWildcardSymbol = async () => {
+      setAllowWildcardSymbol(getIfAllowWildcardSymbol(subscriptionData?.subscriptions));
+      console.log('allowWildcardSymbol:', allowWildcardSymbol)
     };
 
     const updateAlerts = async () => {
@@ -128,6 +142,11 @@ const Alert = () => {
       updateSubscriptionData(user);
     }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
+    useEffect(() => {
+      updateAllowSMSAlert()
+      updateAllowWildcardSymbol();
+    }, [subscriptionData]); // eslint-disable-line react-hooks/exhaustive-deps
+
     const handlePost = (alert) => {
         setApiState({
             ...apiState,
@@ -198,7 +217,7 @@ const Alert = () => {
                         <td>{alert.alert_name}</td>
                         <td>{alert.description}</td>
                         <td>
-                            <AlertBuilder alert={alert} after_ok={handlePost}>edit</AlertBuilder>
+                            <AlertBuilder alert={alert} after_ok={handlePost} allowSMSAlert={allowSMSAlert} allowWildcardSymbol={allowWildcardSymbol}>edit</AlertBuilder>
                         </td>
                         <td>
                             <AlertDelete list_index={i} alert={alert} after_ok={handleDelete}>delete</AlertDelete>
@@ -207,7 +226,7 @@ const Alert = () => {
                 ))}
             </tbody>
             </Table>
-            <AlertBuilder alert={undefined} after_ok={handlePost}>add a new alert</AlertBuilder>
+            <AlertBuilder alert={undefined} after_ok={handlePost} allowSMSAlert={allowSMSAlert} allowWildcardSymbol={allowWildcardSymbol}>add a new alert</AlertBuilder>
             </div>
         </Container>
     );

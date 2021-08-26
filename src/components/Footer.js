@@ -1,12 +1,11 @@
 import React from "react";
 
 const Footer = () => (
-  <footer className="bg-light p-3 text-center">
-    <div className="logo" />
+  <div className="footer bg-white text-center">
     <p>
     Copyright © 2021, Hedgecoast, Inc. All Rights Reserved.
     </p>
-  </footer>
+  </div>
 );
 
 export default Footer;

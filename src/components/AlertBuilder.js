@@ -1,10 +1,11 @@
 /* eslint react/no-multi-comp: 0, react/prop-types: 0 */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert, Button, FormGroup, Spinner, Input, Label, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap';
 import Select from 'react-select'
 import { useAuth0 } from "@auth0/auth0-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 const options_window = [
@@ -43,13 +44,16 @@ const valueToOption = (value, options) => {
 const AlertBuilder = (props) => {
   const {
     alert,
-    after_ok
+    after_ok,
+    allowSMSAlert,
+    allowWildcardSymbol
   } = props;
 
   const [modal, setModal] = useState(false);
   const [alertName, setAlertName] = React.useState(alert?.alert_name || '');
   const [description, setDescription] = React.useState(alert?.description || '');
   const [symbol, setSymbol] = React.useState(alert?.symbol || '');
+  const [allSymbolChecked, setAllSymbolChecked] = React.useState(false);
   const [window, setwindow] = React.useState(valueToOption(alert?.window_size_minutes, options_window));
   const [threshold, setThreshold] = React.useState(valueToOption(alert?.threshold_percent, options_threshold));
   const [moveDirection, setMoveDirection] = React.useState(valueToOption(alert?.move_type, options_move_direction));
@@ -80,6 +84,11 @@ const AlertBuilder = (props) => {
         setSymbol(event.target.value);
   };
 
+  const handleAllSymbolToggle = (event) => {
+    console.log('event:', event)
+    console.log('event.target.checked:', event.target.checked)
+  }
+
   const handleDestinationChange = (event) => {
     setDestination(event.target.value);
 };
@@ -102,6 +111,14 @@ const AlertBuilder = (props) => {
   };
 
   // API
+  const {
+    isAuthenticated,
+    getAccessTokenSilently,
+    loginWithPopup,
+    getAccessTokenWithPopup,
+    user,
+  } = useAuth0();
+
   const [apiState, setApiState] = useState({
     isLoading: false,
     showResult: false,
@@ -120,13 +137,6 @@ const AlertBuilder = (props) => {
   }
 
   const alertApiOrigin = "https://ynpz1kpon8.execute-api.us-east-2.amazonaws.com/test";
-  const {
-    isAuthenticated,
-    getAccessTokenSilently,
-    loginWithPopup,
-    getAccessTokenWithPopup,
-    user,
-  } = useAuth0();
 
   const callApi = async () => {
     try {
@@ -289,9 +299,13 @@ const AlertBuilder = (props) => {
             </FormGroup>
             <FormGroup row>
                 <Label sm="2">Symbol:</Label>
-                <Col sm="10">
+                <Col sm="6">
                     <Input type="text" defaultValue={symbol} onChange={handleSymbolChange} />
                 </Col>
+                <Label check sm="4">
+                  <Input type="checkbox" onChange={handleAllSymbolToggle} disabled={!allowWildcardSymbol} />
+                  All Symbols{" "}<FontAwesomeIcon icon="question-circle" className="mr-3" />
+                </Label>
             </FormGroup>
             <FormGroup row>
                 <Col sm="2">Window:</Col>

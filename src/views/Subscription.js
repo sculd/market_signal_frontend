@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Alert, Button, Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import { isOnLightPlan, isOnPremiumPlan } from "../utils/userProfile";
+import { checkoutApiBaseUrl } from "../utils/apiUrls";
 
 const Subscription = () => {
     const {
@@ -20,15 +21,14 @@ const Subscription = () => {
     const [shouldActivateJoinLightTier, setShouldActivateJoinLightTier] = useState(false);  
     const [shouldActivateJoinPremiumTier, setShouldActivateJoinPremiumTier] = useState(false);    
 
-    const apiBaseUrl = "https://v0hauynbz7.execute-api.us-east-2.amazonaws.com/test"
-    const checkoutSessionUrl = `${apiBaseUrl}/checkout`
-    const subscriptionPortalRetrieveUrl = `${apiBaseUrl}/portal`
+    const checkoutSessionUrl = `${checkoutApiBaseUrl}/checkout`
+    const subscriptionPortalRetrieveUrl = `${checkoutApiBaseUrl}/portal`
 
     const updateSubscriptionData = async (user) => {
         if (!isAuthenticated) {
             return
         }
-        const getUserApiPath = (user) => `${apiBaseUrl}/users/${user?.sub?.split('auth0|').slice(-1)[0]}/stripe_customer?email=${user?.email}`;    
+        const getUserApiPath = (user) => `${checkoutApiBaseUrl}/users/${user?.sub?.split('auth0|').slice(-1)[0]}/stripe_customer?email=${user?.email}`;    
         const token = await getAccessTokenSilently();
         const response = await fetch(getUserApiPath(user), {
                 headers: {

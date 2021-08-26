@@ -34,7 +34,7 @@ const columns = [
     {
       name: 'threshold',
       header: 'Threshold',
-      render: ({ value }) => String(Number(value * 100).toFixed(2)) + "%",
+      render: ({ value }) => String(Number(value * 100).toFixed(0)) + "%",
       maxWidth: 80
     },
     {
@@ -43,7 +43,7 @@ const columns = [
     },
     {
       name: 'summary',
-      header: 'Summary@', 
+      header: 'Summary', 
       minWidth: 800,
       maxWidth: 1000
     },
