@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Select from 'react-select'
 import { useAuth0 } from "@auth0/auth0-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { alertApiBaseUrl } from "../utils/apiUrls";
 
 
 const emailRegExp = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
@@ -185,8 +186,6 @@ const AlertBuilder = (props) => {
     });
   }
 
-  const alertApiOrigin = "https://ynpz1kpon8.execute-api.us-east-2.amazonaws.com/test";
-
   const callApi = async () => {
     try {
       const token = await getAccessTokenSilently();
@@ -204,7 +203,7 @@ const AlertBuilder = (props) => {
         notification_to_sms: destinatinoTypeSMSChecked,
         notification_sms: smsDestination,
       }
-      const response = await fetch(`${alertApiOrigin}/users/${user.sub.split("auth0|").pop()}/alerts/${alert?.alert_id || ''}`, {
+      const response = await fetch(`${alertApiBaseUrl}/users/${user.sub.split("auth0|").pop()}/alerts/${alert?.alert_id || ''}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -355,13 +354,16 @@ const AlertBuilder = (props) => {
                 <Col sm="6">
                     <Input type="text" defaultValue={symbol} onChange={handleSymbolChange} disabled={allSymbolChecked} />
                 </Col>
-                <Label check sm="4">
+                <Label check sm="2">
                   <Input type="checkbox" onChange={handleAllSymbolToggle} checked={allSymbolChecked} disabled={!allowWildcardSymbol} />
-                  All Symbols{" "}<a type="button" class="btn-tw"><FontAwesomeIcon id="allSymbolsHelpPopover" icon="question-circle" /></a>
+                  Any
                 </Label>
+                <Label help sm="2">
+                <a type="button" class="btn-tw"><FontAwesomeIcon id="allSymbolsHelpPopover" icon="question-circle" /></a>
                 <Popover placement="bottom" isOpen={allSymbolHelpPopoverOpen} target="allSymbolsHelpPopover" toggle={handleAllSymbolHelpPopoverToggle}>
                   <PopoverBody>Alert when ANY symbol matches the condition. Only for paid users. Manage <Link to="/subscription" target="_blank">Subscription</Link>.</PopoverBody>
                 </Popover>
+                </Label>
                 
             </FormGroup>
             <FormGroup row>

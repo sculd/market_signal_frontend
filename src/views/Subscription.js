@@ -175,6 +175,7 @@ const Subscription = () => {
                     <Col md>
                         <h2>{user.name}</h2>
                         <p className="lead text-muted">{user.email}</p>
+                        {isAuthenticated && !isOnLightPlan(subscriptionData?.subscriptions) && !isOnPremiumPlan(subscriptionData?.subscriptions) && (<span>On Basic plan</span>)}
                         {isOnLightPlan(subscriptionData?.subscriptions) && (<span>On Light plan</span>)}
                         {isOnPremiumPlan(subscriptionData?.subscriptions) && (<span>On Premium plan</span>)}
                         {portalUrl !== '' && (<span> (<a href={portalUrl}>manage subscription</a>)</span>)}
