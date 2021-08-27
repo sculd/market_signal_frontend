@@ -24,6 +24,16 @@ const Subscription = () => {
     const checkoutSessionUrl = `${checkoutApiBaseUrl}/checkout`
     const subscriptionPortalRetrieveUrl = `${checkoutApiBaseUrl}/portal`
 
+    const isOnBasicPlan = () => {
+        if (!isAuthenticated || subscriptionData?.subscriptions === undefined) {
+            return false
+        }
+        if (isOnLightPlan(subscriptionData?.subscriptions) || isOnPremiumPlan(subscriptionData?.subscriptions)) {
+            return false
+        }
+        return true
+    }
+
     const updateSubscriptionData = async (user) => {
         if (!isAuthenticated) {
             return
@@ -175,7 +185,7 @@ const Subscription = () => {
                     <Col md>
                         <h2>{user.name}</h2>
                         <p className="lead text-muted">{user.email}</p>
-                        {isAuthenticated && !isOnLightPlan(subscriptionData?.subscriptions) && !isOnPremiumPlan(subscriptionData?.subscriptions) && (<span>On Basic plan</span>)}
+                        {isOnBasicPlan() && (<span>On Basic plan</span>)}
                         {isOnLightPlan(subscriptionData?.subscriptions) && (<span>On Light plan</span>)}
                         {isOnPremiumPlan(subscriptionData?.subscriptions) && (<span>On Premium plan</span>)}
                         {portalUrl !== '' && (<span> (<a href={portalUrl}>manage subscription</a>)</span>)}
