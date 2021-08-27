@@ -361,7 +361,7 @@ const AlertBuilder = (props) => {
                 <Label help sm="2">
                 <a type="button" class="btn-tw"><FontAwesomeIcon id="allSymbolsHelpPopover" icon="question-circle" /></a>
                 <Popover placement="bottom" isOpen={allSymbolHelpPopoverOpen} target="allSymbolsHelpPopover" toggle={handleAllSymbolHelpPopoverToggle}>
-                  <PopoverBody>Alert when ANY symbol matches the condition. Only for paid users. Manage <Link to="/subscription" target="_blank">Subscription</Link>.</PopoverBody>
+                  <PopoverBody>Alert when ANY symbol matches the condition. Only for paid users. Manage subscription <Link to="/subscription" target="_blank">here</Link>.</PopoverBody>
                 </Popover>
                 </Label>
                 
@@ -414,7 +414,7 @@ const AlertBuilder = (props) => {
                 <Col sm="2">
                   <a type="button" class="btn-tw"><FontAwesomeIcon id="destinatinoTypeSMSHelpPopover" icon="question-circle" /></a>
                   <Popover placement="bottom" isOpen={destinatinoTypeSMSHelpPopoverOpen} target="destinatinoTypeSMSHelpPopover" toggle={handleDestinationTypeSMSHelpPopoverToggle}>
-                    <PopoverBody>AMA alert is for paid users only. Manage <Link to="/subscription" target="_blank">Subscription</Link>.</PopoverBody>
+                    <PopoverBody>AMA alert is for paid users only. Manage subscription <Link to="/subscription" target="_blank">here</Link>.</PopoverBody>
                   </Popover>
                 </Col>
 
