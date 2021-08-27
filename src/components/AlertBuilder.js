@@ -7,6 +7,8 @@ import Select from 'react-select'
 import { useAuth0 } from "@auth0/auth0-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+const emailRegExp = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
+const phoneNumberRegExp = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
 
 const options_window = [
     { value: '20', label: '20 Minutes' },
@@ -23,11 +25,6 @@ const options_threshold = [
 const options_move_direction = [
     { value: 'jump', label: 'Jump' },
     { value: 'drop', label: 'Drop' }
-];
-
-const options_destinatino_type = [
-    { value: 'email', label: 'E-Mail' },
-    { value: 'sms', label: 'SMS' }
 ];
 
 const valueToOption = (value, options) => {
@@ -53,7 +50,7 @@ const AlertBuilder = (props) => {
   const [alertName, setAlertName] = React.useState(alert?.alert_name || '');
   const [description, setDescription] = React.useState(alert?.description || '');
   const [symbol, setSymbol] = React.useState(alert?.symbol || '');
-  const [allSymbolChecked, setAllSymbolChecked] = React.useState(false);
+  const [allSymbolChecked, setAllSymbolChecked] = React.useState(alert?.is_all_symbols || false);
   const [window, setwindow] = React.useState(valueToOption(alert?.window_size_minutes, options_window));
   const [threshold, setThreshold] = React.useState(valueToOption(alert?.threshold_percent, options_threshold));
   const [moveDirection, setMoveDirection] = React.useState(valueToOption(alert?.move_type, options_move_direction));
@@ -61,16 +58,17 @@ const AlertBuilder = (props) => {
   const [destinatinoTypeSMSChecked, setDestinatinoTypeSMSChecked] = React.useState(false);
   const [emailDestination, setEmailDestination] = React.useState(alert?.notification_destination || '');
   const [smsDestination, setSmsDestination] = React.useState(alert?.notification_destination || '');
+  const [normalizedSmsDestination, setNormalizedSmsDestination] = React.useState(smsDestination);
 
   function resetStates() {
     setAlertName(alert?.alert_name || '');
     setDescription(alert?.description || '');
     setSymbol(alert?.symbol || '');
-    setAllSymbolChecked(alert?.setAllSymbol || false);
+    setAllSymbolChecked(alert?.is_all_symbols || false);
     setwindow(valueToOption(alert?.window_size_minutes, options_window));
     setThreshold(valueToOption(alert?.threshold_percent, options_threshold));
     setMoveDirection(valueToOption(alert?.move_type, options_move_direction));
-    setDestinatinoTypeEmailChecked(true && true)
+    setDestinatinoTypeEmailChecked(alert?.notification_to_email === undefined || alert?.notification_to_email)
     setDestinatinoTypeSMSChecked(alert?.notification_to_sms || false)
     setEmailDestination(alert?.notification_email || '');
     setSmsDestination(alert?.notification_sms || '');
@@ -101,12 +99,44 @@ const AlertBuilder = (props) => {
     setDestinatinoTypeSMSChecked(event.target.checked);
   }
 
-  const handleEmailDestinationChange = (event) => {
+  const getValidEmail = () => {
+    return emailDestination !== '' && emailRegExp.exec(emailDestination) !== null
+  }
+
+  const getInValidEmail = () => {
+    return emailDestination !== '' && destinatinoTypeEmailChecked && emailRegExp.exec(emailDestination) === null
+  }
+
+  const normalizePhoneNumber = (value) => {
+    if (!value) return value;
+    const currentValue = value.replace(/[^\d]/g, '');
+    const cvLength = currentValue.length;
+    
+    if (cvLength < 4) return currentValue;
+    if (cvLength < 7) return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3)}`;
+    return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3, 6)}-${currentValue.slice(6, 10)}`;
+  };
+  
+  const getValidSMS = () => {
+    return smsDestination !== '' && phoneNumberRegExp.exec(smsDestination) !== null
+  }
+
+  const getInValidSMS = () => {
+    return smsDestination !== '' && destinatinoTypeSMSChecked && phoneNumberRegExp.exec(smsDestination) === null
+  }
+
+  const getValidInputs = () => {
+    const email = !destinatinoTypeEmailChecked || getValidEmail()
+    const sms = !destinatinoTypeSMSChecked || getValidSMS()
+    return email && sms
+  }
+
+  const handleEmailDestinationChange = (event) => {    
     setEmailDestination(event.target.value);
   };
 
   const handleSMSDestinationChange = (event) => {
-    setSmsDestination(event.target.value);
+    setSmsDestination(normalizePhoneNumber(event.target.value));
   };
 
   // Select form change handler
@@ -157,6 +187,7 @@ const AlertBuilder = (props) => {
       const body = {
         alert_name: alertName,
         symbols: symbol,
+        is_all_symbols: allSymbolChecked,
         description: description,
         time_window_minutes: window.value,
         threshold_percent: threshold.value,
@@ -176,11 +207,11 @@ const AlertBuilder = (props) => {
 
       var apiError = "";
       const isApiError = response.status >= 400;
+      const responseData = await response.json();
       if (isApiError) {
         apiError = responseData;
       }
 
-      const responseData = await response.json();
       setApiState({
         ...apiState,
         showResult: true,
@@ -264,6 +295,7 @@ const AlertBuilder = (props) => {
       <Button outline color="primary" onClick={openModal}>{props.children}</Button>
       <Modal isOpen={modal} toggle={toggle} backdrop={true}>
         <ModalHeader toggle={toggle}>
+          <Label>Alert Name:</Label>
             <Input type="text" placeholder="Alert name." defaultValue={alertName} onChange={handleAlertNameChange} />
             {apiState.isLoading && (
                 <Spinner size="sm" color="primary" />
@@ -317,7 +349,7 @@ const AlertBuilder = (props) => {
                     <Input type="text" defaultValue={symbol} onChange={handleSymbolChange} disabled={allSymbolChecked} />
                 </Col>
                 <Label check sm="4">
-                  <Input type="checkbox" onChange={handleAllSymbolToggle} disabled={!allowWildcardSymbol} />
+                  <Input type="checkbox" onChange={handleAllSymbolToggle} checked={allSymbolChecked} disabled={!allowWildcardSymbol} />
                   All Symbols{" "}<FontAwesomeIcon icon="question-circle" />
                 </Label>
             </FormGroup>
@@ -358,14 +390,14 @@ const AlertBuilder = (props) => {
             <FormGroup row>
                 <Col sm="4"><CustomInput type="checkbox" id="check_destination_type_email" label="E-mail" checked={destinatinoTypeEmailChecked} onChange={handleDestinationTypeEmailToggle} /></Col>
                 <Col sm="8">
-                    <Input type="text" placeholder="E-mail destination." defaultValue={emailDestination} onChange={handleEmailDestinationChange} disabled={!destinatinoTypeEmailChecked} />
+                    <Input type="text" placeholder="E-mail destination." defaultValue={emailDestination} onChange={handleEmailDestinationChange} disabled={!destinatinoTypeEmailChecked} valid={getValidEmail()} invalid={getInValidEmail()} />
                 </Col>
             </FormGroup>
 
             <FormGroup row>
-                <Col sm="4"><CustomInput type="checkbox" id="check_destination_type_sms" label="SMS" checked={destinatinoTypeSMSChecked} onChange={handleDestinationTypeSMSToggle} /></Col>
+                <Col sm="4"><CustomInput type="checkbox" id="check_destination_type_sms" label="SMS" checked={destinatinoTypeSMSChecked} onChange={handleDestinationTypeSMSToggle} disabled={!allowSMSAlert} /></Col>
                 <Col sm="8">
-                    <Input type="text" placeholder="SMS destination." defaultValue={smsDestination} onChange={handleSMSDestinationChange} disabled={!destinatinoTypeSMSChecked} />
+                    <Input type="text" placeholder="SMS destination." value={smsDestination} onChange={handleSMSDestinationChange} disabled={!destinatinoTypeSMSChecked} valid={getValidSMS()} invalid={getInValidSMS()} />
                 </Col>
             </FormGroup>
 
@@ -373,10 +405,10 @@ const AlertBuilder = (props) => {
         
         </ModalBody>
         <ModalFooter>
-          {isAuthenticated && (
+          {isAuthenticated && getValidInputs() && (
           <Button color="primary" onClick={handleOk}>Ok</Button>
           )}
-          {!isAuthenticated && (
+          {(!isAuthenticated || !getValidInputs()) && (
           <Button color="primary" disabled>Ok</Button>
           )}
           {' '}
