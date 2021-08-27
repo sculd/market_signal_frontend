@@ -1,11 +1,13 @@
 /* eslint react/no-multi-comp: 0, react/prop-types: 0 */
 
 import React, { useState, useEffect } from 'react';
-import { Alert, Button, FormGroup, Spinner, CustomInput, Input, Label, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Alert, Button, FormGroup, Spinner, CustomInput, Input, Label, Modal, ModalHeader, ModalBody, ModalFooter, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap';
+import { Link } from "react-router-dom";
 import Select from 'react-select'
 import { useAuth0 } from "@auth0/auth0-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 const emailRegExp = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
 const phoneNumberRegExp = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
@@ -51,14 +53,15 @@ const AlertBuilder = (props) => {
   const [description, setDescription] = React.useState(alert?.description || '');
   const [symbol, setSymbol] = React.useState(alert?.symbol || '');
   const [allSymbolChecked, setAllSymbolChecked] = React.useState(alert?.is_all_symbols || false);
+  const [allSymbolHelpPopoverOpen, setAllSymbolHelpPopoverOpen] = useState(false);
   const [window, setwindow] = React.useState(valueToOption(alert?.window_size_minutes, options_window));
   const [threshold, setThreshold] = React.useState(valueToOption(alert?.threshold_percent, options_threshold));
   const [moveDirection, setMoveDirection] = React.useState(valueToOption(alert?.move_type, options_move_direction));
   const [destinatinoTypeEmailChecked, setDestinatinoTypeEmailChecked] = React.useState(true);
   const [destinatinoTypeSMSChecked, setDestinatinoTypeSMSChecked] = React.useState(false);
+  const [destinatinoTypeSMSHelpPopoverOpen, setDestinatinoTypeSMSHelpPopoverOpen] = useState(false);
   const [emailDestination, setEmailDestination] = React.useState(alert?.notification_destination || '');
   const [smsDestination, setSmsDestination] = React.useState(alert?.notification_destination || '');
-  const [normalizedSmsDestination, setNormalizedSmsDestination] = React.useState(smsDestination);
 
   function resetStates() {
     setAlertName(alert?.alert_name || '');
@@ -91,6 +94,8 @@ const AlertBuilder = (props) => {
     setAllSymbolChecked(event.target.checked);
   }
 
+  const handleAllSymbolHelpPopoverToggle = () => setAllSymbolHelpPopoverOpen(!allSymbolHelpPopoverOpen);
+
   const handleDestinationTypeEmailToggle = (event) => {
     setDestinatinoTypeEmailChecked(event.target.checked);
   }
@@ -98,6 +103,8 @@ const AlertBuilder = (props) => {
   const handleDestinationTypeSMSToggle = (event) => {
     setDestinatinoTypeSMSChecked(event.target.checked);
   }
+
+  const handleDestinationTypeSMSHelpPopoverToggle = () => setDestinatinoTypeSMSHelpPopoverOpen(!destinatinoTypeSMSHelpPopoverOpen);
 
   const getValidEmail = () => {
     return emailDestination !== '' && emailRegExp.exec(emailDestination) !== null
@@ -350,8 +357,12 @@ const AlertBuilder = (props) => {
                 </Col>
                 <Label check sm="4">
                   <Input type="checkbox" onChange={handleAllSymbolToggle} checked={allSymbolChecked} disabled={!allowWildcardSymbol} />
-                  All Symbols{" "}<FontAwesomeIcon icon="question-circle" />
+                  All Symbols{" "}<a type="button" class="btn-tw"><FontAwesomeIcon id="allSymbolsHelpPopover" icon="question-circle" /></a>
                 </Label>
+                <Popover placement="bottom" isOpen={allSymbolHelpPopoverOpen} target="allSymbolsHelpPopover" toggle={handleAllSymbolHelpPopoverToggle}>
+                  <PopoverBody>Alert when ANY symbol matches the condition. Only for paid users. Manage <Link to="/subscription" target="_blank">Subscription</Link>.</PopoverBody>
+                </Popover>
+                
             </FormGroup>
             <FormGroup row>
                 <Col sm="2">Window:</Col>
@@ -395,7 +406,16 @@ const AlertBuilder = (props) => {
             </FormGroup>
 
             <FormGroup row>
-                <Col sm="4"><CustomInput type="checkbox" id="check_destination_type_sms" label="SMS" checked={destinatinoTypeSMSChecked} onChange={handleDestinationTypeSMSToggle} disabled={!allowSMSAlert} /></Col>
+                <Col sm="2">
+                  <CustomInput type="checkbox" id="check_destination_type_sms" label="SMS" checked={destinatinoTypeSMSChecked} onChange={handleDestinationTypeSMSToggle} disabled={!allowSMSAlert} />
+                </Col>
+                <Col sm="2">
+                  <a type="button" class="btn-tw"><FontAwesomeIcon id="destinatinoTypeSMSHelpPopover" icon="question-circle" /></a>
+                  <Popover placement="bottom" isOpen={destinatinoTypeSMSHelpPopoverOpen} target="destinatinoTypeSMSHelpPopover" toggle={handleDestinationTypeSMSHelpPopoverToggle}>
+                    <PopoverBody>AMA alert is for paid users only. Manage <Link to="/subscription" target="_blank">Subscription</Link>.</PopoverBody>
+                  </Popover>
+                </Col>
+
                 <Col sm="8">
                     <Input type="text" placeholder="SMS destination." value={smsDestination} onChange={handleSMSDestinationChange} disabled={!destinatinoTypeSMSChecked} valid={getValidSMS()} invalid={getInValidSMS()} />
                 </Col>
