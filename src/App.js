@@ -40,7 +40,6 @@ const App = () => {
     <Router history={history}>
       <div id="app" className="d-flex flex-column h-100 w-100">
         <NavBar />
-        <Container className="flex-grow-1 mt-5">
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/chart" exact component={Chart} />
@@ -53,7 +52,6 @@ const App = () => {
             <Route path="/privacy" component={Privacy} />
             <Route path="/eula" component={EULA} />
           </Switch>
-        </Container>
         <Footer />
       </div>
     </Router>

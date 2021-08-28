@@ -59,7 +59,7 @@ const columns = [
 const gridStyle = { minHeight: 550 }
 
 const Styles = styled.div`
-  padding: 1rem;
+  padding: 1rem 5rem;
 
   table {
     border-spacing: 0;
