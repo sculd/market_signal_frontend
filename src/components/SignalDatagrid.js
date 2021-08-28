@@ -3,7 +3,14 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import { DataGrid  } from '@material-ui/data-grid';
+import { makeStyles } from '@material-ui/core/styles';
+import { DataGrid, 
+  GridToolbar, 
+  GridToolbarContainer,
+  GridToolbarColumnsButton,
+  GridToolbarFilterButton,
+  GridToolbarExport,
+  GridToolbarDensitySelector, } from '@material-ui/data-grid';
 
 const columns = [
     {
@@ -18,7 +25,9 @@ const columns = [
       headerName: 'Symbol', 
       type: 'number', 
       width: 130,
-      valueFormatter: ({ value }) => value,
+      valueFormatter: ({ value }) => {
+        return value
+      },
     },
     {
       field: 'recent_price',
@@ -38,7 +47,7 @@ const columns = [
       field: 'threshold',
       headerName: 'Threshold',
       type: 'number',
-      valueGetter: ({ value }) => Number(value * 100).toFixed(2),
+      valueGetter: ({ value }) => Number(value * 100).toFixed(0),
       valueFormatter: ({ value }) => String(value) + "%",
       width: 100,
     },
@@ -64,6 +73,16 @@ const theme = createMuiTheme({
 });
 //*/
 
+function Toolbar() {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarColumnsButton />
+      <GridToolbarFilterButton />
+      <GridToolbarExport />
+    </GridToolbarContainer>
+  );
+}
+
 function DataGridWithRows({ rows }) {
     /*
     <MuiThemeProvider theme={theme}>
@@ -78,6 +97,9 @@ function DataGridWithRows({ rows }) {
                 sort: 'desc',
                 },
             ]}
+            components={{
+              Toolbar: Toolbar,
+            }}
         />
       </div>
     );
@@ -111,6 +133,13 @@ const Styles = styled.div`
     }
   }
 `;
+
+const useStyles = makeStyles((theme) => ({
+  tabpanelRoot: {
+    padding:0,
+    height: `calc(100vh - 102px)`
+  },
+}));
 
 function SignalDataGrid() {
   const [error, setError] = useState(null);
@@ -226,6 +255,8 @@ function SignalDataGrid() {
     <div></div>
   )
 
+  const classes = useStyles();
+
   return (
     <Styles>
       <Tabs>
@@ -238,10 +269,10 @@ function SignalDataGrid() {
           { error ? <Error />  : null }
           { isLoaded? <IsLoaded /> : null }
         </div>
-        <TabPanel>
+        <TabPanel classes={{root:classes.tabpanelRoot}}>
           <DataGridWithRows rows={stockItems} />
         </TabPanel>
-        <TabPanel>
+        <TabPanel classes={{root:classes.tabpanelRoot}}>
           <DataGridWithRows rows={cryptoItems} />
         </TabPanel>
       </Tabs>
