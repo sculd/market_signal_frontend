@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import ReactDataGrid from '@inovua/reactdatagrid-enterprise'
@@ -18,6 +19,12 @@ const columns = [
       name: 'symbol', 
       header: 'Symbol',
       filterEditor: SelectFilter,
+      render: ({ value, data }) => {
+        const to = `/chart?symbol=${value}`
+        return <div style={{ display: 'inline-block' }}>
+          <Link to={to} target="_blank">{value}</Link>
+        </div>
+      },
       maxWidth: 100
     },
     {
