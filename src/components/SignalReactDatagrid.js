@@ -8,7 +8,8 @@ import ReactDataGrid from '@inovua/reactdatagrid-enterprise'
 import SelectFilter from '@inovua/reactdatagrid-community/SelectFilter'
 import '@inovua/reactdatagrid-enterprise/index.css'
 
-const columns = [
+const getColumn = (items) => {
+  return [
     {
         name: 'datetime_et',
         header: 'Datetime',
@@ -19,6 +20,10 @@ const columns = [
       name: 'symbol', 
       header: 'Symbol',
       filterEditor: SelectFilter,
+      filterEditorProps: {
+        placeholder: 'All',
+        dataSource: [... new Set(items.map(i => i['symbol']))].map(s => { return {id: s, label: s} })
+      },
       render: ({ value, data }) => {
         const to = `/chart?symbol=${value}`
         return <div style={{ display: 'inline-block' }}>
@@ -36,17 +41,32 @@ const columns = [
     {
       name: 'window_size_minutes',
       header: 'Window',
-      maxWidth: 100
+      maxWidth: 100,
+      filterEditor: SelectFilter,
+      filterEditorProps: {
+        placeholder: 'All',
+        dataSource: [{id: 10, label: '10'}, {id: 20, label: '20'}, {id: 30, label: '30'}, {id: 60, label: '60'}]
+      },
     },
     {
       name: 'threshold',
       header: 'Threshold',
+      filterEditor: SelectFilter,
+      filterEditorProps: {
+        placeholder: 'All',
+        dataSource: [{id: "0.1", label: '10%'}, {id: "0.2", label: '20%'}, {id: "0.3", label: '30%'}]
+      },
       render: ({ value }) => String(Number(value * 100).toFixed(0)) + "%",
-      maxWidth: 80
+      maxWidth: 100
     },
     {
       name: 'type_str',
       header: 'Type',
+      filterEditor: SelectFilter,
+      filterEditorProps: {
+        placeholder: 'All',
+        dataSource: [{id: "Jump", label: 'Jump'}, {id: "Drop", label: 'Drop'}]
+      },
     },
     {
       name: 'summary',
@@ -54,9 +74,14 @@ const columns = [
       minWidth: 800,
       maxWidth: 1000
     },
-    ];
+  ]
+}
 
-const gridStyle = { minHeight: 550 }
+const baseColumns = getColumn([]);
+  
+const gridStyle = { 
+  minHeight: 1200 
+}
 
 const Styles = styled.div`
   padding: 1rem 5rem;
@@ -197,7 +222,25 @@ function SignalDataGrid() {
       const IsLoaded = () => (
         <div></div>
       )
-    
+        
+    const cryptoFilterValue = [
+      { name: 'symbol', operator: 'eq', type: 'select', value: null },
+      { name: 'window_size_minutes', operator: 'eq', type: 'select', value: null },
+      { name: 'threshold', operator: 'eq', type: 'select', value: null },
+      { name: 'type_str', operator: 'eq', type: 'select', value: null }
+    ];
+
+    const [stockColumns, setStockColumns] = useState(baseColumns);
+    const [cryptoColumns, setCryptoColumns] = useState(baseColumns);
+
+    useEffect(() => {
+      setCryptoColumns(getColumn(stockItems))
+    }, [cryptoItems]); // eslint-disable-line react-hooks/exhaustive-deps
+      
+    useEffect(() => {
+      setCryptoColumns(getColumn(cryptoItems))
+    }, [cryptoItems]); // eslint-disable-line react-hooks/exhaustive-deps
+  
     return (
         <Styles>
           <Tabs>
@@ -214,7 +257,7 @@ function SignalDataGrid() {
             <TabPanel>
                 <ReactDataGrid
                     idProperty="id"
-                    columns={columns}
+                    columns={stockColumns}
                     dataSource={stockItems}
                     style={gridStyle}
                 />
@@ -222,9 +265,10 @@ function SignalDataGrid() {
             <TabPanel>
                 <ReactDataGrid
                     idProperty="id"
-                    columns={columns}
+                    columns={cryptoColumns}
                     dataSource={cryptoItems}
                     style={gridStyle}
+                    defaultFilterValue={cryptoFilterValue}
                 />
             </TabPanel>
           </Tabs>
