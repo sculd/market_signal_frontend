@@ -4,6 +4,7 @@ import { Alert, Button, Container, Row, Col, ListGroup, ListGroupItem } from "re
 import { useAuth0 } from "@auth0/auth0-react";
 import { isOnLightPlan, isOnPremiumPlan } from "../utils/userProfile";
 import { checkoutApiBaseUrl } from "../utils/apiUrls";
+import { Styles } from "../utils/style";
 
 const Subscription = () => {
     const {
@@ -170,135 +171,137 @@ const Subscription = () => {
     }, [subscriptionData]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <div>
-          {isAuthenticated && (
+        <Styles>
             <div>
-                <Container className="mb-5">
-                    <Row className="align-items-center profile-header mb-5 text-center text-md-left">
-                    <Col md={2}>
-                        <img
-                        src={user.picture}
-                        alt="Profile"
-                        className="rounded-circle img-fluid profile-picture mb-3 mb-md-0"
-                        />
+            {isAuthenticated && (
+                <div>
+                    <Container className="mb-5">
+                        <Row className="align-items-center profile-header mb-5 text-center text-md-left">
+                        <Col md={2}>
+                            <img
+                            src={user.picture}
+                            alt="Profile"
+                            className="rounded-circle img-fluid profile-picture mb-3 mb-md-0"
+                            />
+                        </Col>
+                        <Col md>
+                            <h2>{user.name}</h2>
+                            <p className="lead text-muted">{user.email}</p>
+                            {isOnBasicPlan() && (<span>On Basic plan</span>)}
+                            {isOnLightPlan(subscriptionData?.subscriptions) && (<span>On Light plan</span>)}
+                            {isOnPremiumPlan(subscriptionData?.subscriptions) && (<span>On Premium plan</span>)}
+                            {portalUrl !== '' && (<span> (<a href={portalUrl}>manage subscription</a>)</span>)}
+                        </Col>
+                        </Row>
+                    </Container>
+                    <hr />
+                </div>
+            )}
+            <Container className="mb-5">
+                <h2 className="my-5 text-center">Pricing</h2>
+                <Alert color="warning">
+                    The service is under development and the billing is for testing purpose.
+                </Alert>
+                <Row className="d-flex justify-content-between">
+                    <Col sm="4">
+                        <ListGroup>
+                        <ListGroupItem>
+                        <h6 className="mb-3">Basic</h6>
+                        0$
+                        </ListGroupItem>
+                        <ListGroupItem>
+                        <p>For all development and testing of personal or commercial projects.</p>
+                        </ListGroupItem>
+                        </ListGroup>
                     </Col>
-                    <Col md>
-                        <h2>{user.name}</h2>
-                        <p className="lead text-muted">{user.email}</p>
-                        {isOnBasicPlan() && (<span>On Basic plan</span>)}
-                        {isOnLightPlan(subscriptionData?.subscriptions) && (<span>On Light plan</span>)}
-                        {isOnPremiumPlan(subscriptionData?.subscriptions) && (<span>On Premium plan</span>)}
-                        {portalUrl !== '' && (<span> (<a href={portalUrl}>manage subscription</a>)</span>)}
+                    <Col sm="4">
+                        <ListGroup>
+                        <ListGroupItem>
+                        <h6 className="mb-3">Light</h6>
+                        20$ / Month
+                        </ListGroupItem>
+                        <ListGroupItem>
+                        <p>For production and published commercial projects.</p>
+                        </ListGroupItem>
+                        </ListGroup>
                     </Col>
-                    </Row>
-                </Container>
-                <hr />
-            </div>
-          )}
-          <Container className="mb-5">
-              <h2 className="my-5 text-center">Pricing</h2>
-              <Alert color="warning">
-                The service is under development and the billing is for testing purpose.
-              </Alert>
-              <Row className="d-flex justify-content-between">
-                <Col sm="4">
-                    <ListGroup>
-                    <ListGroupItem>
-                    <h6 className="mb-3">Basic</h6>
-                    0$
-                    </ListGroupItem>
-                    <ListGroupItem>
-                    <p>For all development and testing of personal or commercial projects.</p>
-                    </ListGroupItem>
-                    </ListGroup>
-                </Col>
-                <Col sm="4">
-                    <ListGroup>
-                    <ListGroupItem>
-                    <h6 className="mb-3">Light</h6>
-                    20$ / Month
-                    </ListGroupItem>
-                    <ListGroupItem>
-                    <p>For production and published commercial projects.</p>
-                    </ListGroupItem>
-                    </ListGroup>
-                </Col>
-                <Col sm="4">
-                    <ListGroup>
-                    <ListGroupItem>
-                    <h6 className="mb-3">Premium</h6>
-                    50$ / Month
-                    </ListGroupItem>
-                    <ListGroupItem>
-                    <p>For enterprise projects that require exceptional resources and support.</p>
-                    </ListGroupItem>
-                    </ListGroup>
-                </Col>
-              </Row>
-              <br />
-              <Row className="d-flex justify-content-between">
-                <Col sm="4">
-                    <ListGroupItem>3 Email Alerts</ListGroupItem>
-                </Col>
-                <Col sm="4">
-                    <ListGroupItem>20 SMS & Email Alerts</ListGroupItem>
-                </Col>
-                <Col sm="4">
-                    <ListGroupItem>100 SMS & Email Alerts</ListGroupItem>
-                </Col>
-              </Row>
-              <br />
-              <Row className="d-flex justify-content-between text-center">
-                <Col sm="4">
-                    {!shouldActivateJoinFreeTier && (<Button color="primary" size="lg" disabled>Start For Free</Button>)}
-                    {shouldActivateJoinFreeTier && (<Button color="primary" size="lg" onClick={handleFree}>Start For Free</Button>)}
-                </Col>
-                <Col sm="4">
-                    {!shouldActivateJoinLightTier && (<Button color="success" size="lg" disabled>Join Light Tier</Button>)}
-                    {shouldActivateJoinLightTier && (<Button color="success" size="lg" onClick={handleLight}>Join Light Tier</Button>)}
-                </Col>
-                <Col sm="4">
-                    {!shouldActivateJoinPremiumTier && (<Button color="danger" size="lg" disabled>Join Premium Tier</Button>)}
-                    {shouldActivateJoinPremiumTier && (<Button color="danger" size="lg" onClick={handlePremium}>Join Premium Tier</Button>)}
-                </Col>
-              </Row>
-          </Container>
+                    <Col sm="4">
+                        <ListGroup>
+                        <ListGroupItem>
+                        <h6 className="mb-3">Premium</h6>
+                        50$ / Month
+                        </ListGroupItem>
+                        <ListGroupItem>
+                        <p>For enterprise projects that require exceptional resources and support.</p>
+                        </ListGroupItem>
+                        </ListGroup>
+                    </Col>
+                </Row>
+                <br />
+                <Row className="d-flex justify-content-between">
+                    <Col sm="4">
+                        <ListGroupItem>3 Email Alerts</ListGroupItem>
+                    </Col>
+                    <Col sm="4">
+                        <ListGroupItem>20 SMS & Email Alerts</ListGroupItem>
+                    </Col>
+                    <Col sm="4">
+                        <ListGroupItem>100 SMS & Email Alerts</ListGroupItem>
+                    </Col>
+                </Row>
+                <br />
+                <Row className="d-flex justify-content-between text-center">
+                    <Col sm="4">
+                        {!shouldActivateJoinFreeTier && (<Button color="primary" size="lg" disabled>Start For Free</Button>)}
+                        {shouldActivateJoinFreeTier && (<Button color="primary" size="lg" onClick={handleFree}>Start For Free</Button>)}
+                    </Col>
+                    <Col sm="4">
+                        {!shouldActivateJoinLightTier && (<Button color="success" size="lg" disabled>Join Light Tier</Button>)}
+                        {shouldActivateJoinLightTier && (<Button color="success" size="lg" onClick={handleLight}>Join Light Tier</Button>)}
+                    </Col>
+                    <Col sm="4">
+                        {!shouldActivateJoinPremiumTier && (<Button color="danger" size="lg" disabled>Join Premium Tier</Button>)}
+                        {shouldActivateJoinPremiumTier && (<Button color="danger" size="lg" onClick={handlePremium}>Join Premium Tier</Button>)}
+                    </Col>
+                </Row>
+            </Container>
 
-          <hr />
-          <Container className="mb-5">
-          <h2 className="my-5 text-center">FAQ</h2>
-              <Row className="d-flex justify-content-between">
-              <Col sm="1">
-              </Col>
-              <Col sm="10">
-                <ListGroupItem>
-                <p>
-                <b>What usage does the Basic plan permit?</b>
-                </p>
-                <p>
-                The Developer plan may be used for development and testing in a development environment only, and cannot be used in a staging or production environment (including internally). When the API is used outside of a development environment an upgrade to one of our subscriptions will be required to continue using the API.
-                </p>
-
-                <p>
-                <b>Can I pay via invoice and ACH/bank transfer?</b>
-                </p>
-                <p>
-                Yes! For annual subscriptions we can accept these payment methods.
-                </p>
-
-                <p>
-                <b>Can I cancel at any time?</b>
-                </p>
-                <p>
-                Of course! When you cancel, your plan will run until the end of the current paid period and you won't be charged again.
-                </p>
-                </ListGroupItem>
-                </Col>
+            <hr />
+            <Container className="mb-5">
+            <h2 className="my-5 text-center">FAQ</h2>
+                <Row className="d-flex justify-content-between">
                 <Col sm="1">
                 </Col>
-              </Row>
-          </Container>
-        </div>
+                <Col sm="10">
+                    <ListGroupItem>
+                    <p>
+                    <b>What usage does the Basic plan permit?</b>
+                    </p>
+                    <p>
+                    The Developer plan may be used for development and testing in a development environment only, and cannot be used in a staging or production environment (including internally). When the API is used outside of a development environment an upgrade to one of our subscriptions will be required to continue using the API.
+                    </p>
+
+                    <p>
+                    <b>Can I pay via invoice and ACH/bank transfer?</b>
+                    </p>
+                    <p>
+                    Yes! For annual subscriptions we can accept these payment methods.
+                    </p>
+
+                    <p>
+                    <b>Can I cancel at any time?</b>
+                    </p>
+                    <p>
+                    Of course! When you cancel, your plan will run until the end of the current paid period and you won't be charged again.
+                    </p>
+                    </ListGroupItem>
+                    </Col>
+                    <Col sm="1">
+                    </Col>
+                </Row>
+            </Container>
+            </div>
+        </Styles>
     );
 }
 

@@ -7,6 +7,7 @@ import AlertBuilder from "../components/AlertBuilder";
 import AlertDelete from "../components/AlertDelete";
 import { getIfAllowSMSAlert, getIfAllowWildcardSymbol } from "../utils/userProfile";
 import { alertApiBaseUrl, checkoutApiBaseUrl } from "../utils/apiUrls";
+import { Styles } from "../utils/style";
 
 const Alert = () => {
     const [apiState, setApiState] = useState({
@@ -161,8 +162,9 @@ const Alert = () => {
           });
         updateAlerts();
     };
-
+  
     return (
+      <Styles>
         <Container className="mb-5">
             <div>
             <h1>Alert{"  "}
@@ -228,6 +230,7 @@ const Alert = () => {
             <AlertBuilder alert={undefined} after_ok={handlePost} allowSMSAlert={allowSMSAlert} allowWildcardSymbol={allowWildcardSymbol}>add a new alert</AlertBuilder>
             </div>
         </Container>
+      </Styles>
     );
 }
 
