@@ -149,15 +149,15 @@ const AlertBuilder = (props) => {
 
   // Select form change handler
   const handleWindowChange = (event) => {
-        setwindow(event.value);
+      setwindow(event);
   };
 
   const handleThresholdChange = (event) => {
-        setThreshold(event.value);
+      setThreshold(event);
   };
 
   const handleMoveDirectionChange = (event) => {
-        setMoveDirection(event.value);
+      setMoveDirection(event);
   };
 
   // API
