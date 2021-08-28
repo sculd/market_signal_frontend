@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Alert, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useAuth0 } from "@auth0/auth0-react";
+import { alertApiBaseUrl } from "../utils/apiUrls";
 
 const AlertDelete = (props) => {
   const {
@@ -17,7 +18,6 @@ const AlertDelete = (props) => {
   });
 
   const [modal, setModal] = useState(false);
-  const alertApiOrigin = "https://ynpz1kpon8.execute-api.us-east-2.amazonaws.com/test";
   const {
     getAccessTokenSilently,
     loginWithPopup,
@@ -29,7 +29,7 @@ const AlertDelete = (props) => {
     try {
       const token = await getAccessTokenSilently();
 
-      const response = await fetch(`${alertApiOrigin}/users/${user.sub.split("auth0|").pop()}/alerts/${alert.alert_id}`, {
+      const response = await fetch(`${alertApiBaseUrl}/users/${user.sub.split("auth0|").pop()}/alerts/${alert.alert_id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

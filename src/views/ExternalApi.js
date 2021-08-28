@@ -4,10 +4,10 @@ import Highlight from "../components/Highlight";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import { getConfig } from "../config";
 import Loading from "../components/Loading";
+import { alertApiBaseUrl } from "../utils/apiUrls";
 
 export const ExternalApiComponent = () => {
   const { audience } = getConfig();
-  const alertApiOrigin = "https://ynpz1kpon8.execute-api.us-east-2.amazonaws.com/test";
 
   const [state, setState] = useState({
     showResult: false,
@@ -60,7 +60,7 @@ export const ExternalApiComponent = () => {
     try {
       const token = await getAccessTokenSilently();
 
-      const response = await fetch(`${alertApiOrigin}/users/${user.sub.split("auth0|").pop()}`, {
+      const response = await fetch(`${alertApiBaseUrl}/users/${user.sub.split("auth0|").pop()}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

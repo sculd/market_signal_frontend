@@ -6,7 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import AlertBuilder from "../components/AlertBuilder";
 import AlertDelete from "../components/AlertDelete";
 import { getIfAllowSMSAlert, getIfAllowWildcardSymbol } from "../utils/userProfile";
-import { checkoutApiBaseUrl } from "../utils/apiUrls";
+import { alertApiBaseUrl, checkoutApiBaseUrl } from "../utils/apiUrls";
 
 const Alert = () => {
     const [apiState, setApiState] = useState({
@@ -19,7 +19,6 @@ const Alert = () => {
     const [allowSMSAlert, setAllowSMSAlert] = useState(false);
     const [allowWildcardSymbol, setAllowWildcardSymbol] = useState(false);
   
-    const alertApiOrigin = "https://ynpz1kpon8.execute-api.us-east-2.amazonaws.com/test";
     const {
       isAuthenticated,
       getAccessTokenSilently,
@@ -67,7 +66,7 @@ const Alert = () => {
         try {
           const token = await getAccessTokenSilently();
     
-          const response = await fetch(`${alertApiOrigin}/users/${user.sub.split("auth0|").pop()}`, {
+          const response = await fetch(`${alertApiBaseUrl}/users/${user.sub.split("auth0|").pop()}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
