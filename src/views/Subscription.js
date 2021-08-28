@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Alert, Button, Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
-import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 import { isOnLightPlan, isOnPremiumPlan } from "../utils/userProfile";
 import { checkoutApiBaseUrl } from "../utils/apiUrls";
 

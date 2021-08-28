@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { DataGrid  } from '@material-ui/data-grid';
-  
+
 const columns = [
     {
         field: 'datetime_et',
@@ -13,7 +13,13 @@ const columns = [
         width: 200,
         valueFormatter: ({ value }) => new Date(value).toLocaleString(),
     },
-    { field: 'symbol', headerName: 'Symbol', type: 'number', width: 130 },
+    { 
+      field: 'symbol', 
+      headerName: 'Symbol', 
+      type: 'number', 
+      width: 130,
+      valueFormatter: ({ value }) => value,
+    },
     {
       field: 'recent_price',
       headerName: 'Current',
@@ -227,7 +233,6 @@ function SignalDataGrid() {
           <Tab>Stock</Tab>
           <Tab>Crypto</Tab>
         </TabList>
-    
         <div>
           { isStockLoading || isCryptoLoading ? <Loading /> : null }
           { error ? <Error />  : null }

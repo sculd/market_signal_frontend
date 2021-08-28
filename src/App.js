@@ -6,6 +6,7 @@ import Loading from "./components/Loading";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import Home from "./views/Home";
+import Chart from "./views/Chart";
 import Alert from "./views/Alert";
 import Subscription from "./views/Subscription";
 import About from "./views/About";
@@ -42,6 +43,7 @@ const App = () => {
         <Container className="flex-grow-1 mt-5">
           <Switch>
             <Route path="/" exact component={Home} />
+            <Route path="/chart" exact component={Chart} />
             <Route path="/alert" exact component={Alert} />
             <Route path="/subscription" exact component={Subscription} />
             <Route path="/about" exact component={About} />

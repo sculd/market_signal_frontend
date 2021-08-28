@@ -1,8 +1,8 @@
 /* eslint react/no-multi-comp: 0, react/prop-types: 0 */
 
-import React, { useState, useEffect } from 'react';
-import { Alert, Button, FormGroup, Spinner, CustomInput, Input, Label, Modal, ModalHeader, ModalBody, ModalFooter, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
-import { Container, Row, Col } from 'reactstrap';
+import React, { useState } from 'react';
+import { Alert, Button, FormGroup, Spinner, CustomInput, Input, Label, Modal, ModalHeader, ModalBody, ModalFooter, Popover, PopoverBody } from 'reactstrap';
+import { Container, Col } from 'reactstrap';
 import { Link } from "react-router-dom";
 import Select from 'react-select'
 import { useAuth0 } from "@auth0/auth0-react";
