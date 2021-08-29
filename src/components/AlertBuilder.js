@@ -414,7 +414,7 @@ const AlertBuilder = (props) => {
                 <Col sm="2">
                   <a type="button" class="btn-tw"><FontAwesomeIcon id="destinatinoTypeSMSHelpPopover" icon="question-circle" /></a>
                   <Popover placement="bottom" isOpen={destinatinoTypeSMSHelpPopoverOpen} target="destinatinoTypeSMSHelpPopover" toggle={handleDestinationTypeSMSHelpPopoverToggle}>
-                    <PopoverBody>AMA alert is for paid users only. Manage subscription <Link to="/subscription" target="_blank">here</Link>.</PopoverBody>
+                    <PopoverBody>SMS alert is for paid users only. Manage subscription <Link to="/subscription" target="_blank">here</Link>.</PopoverBody>
                   </Popover>
                 </Col>
 

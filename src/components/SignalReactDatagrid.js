@@ -8,20 +8,23 @@ import 'react-tabs/style/react-tabs.css';
 import ReactDataGrid from '@inovua/reactdatagrid-enterprise'
 import SelectFilter from '@inovua/reactdatagrid-community/SelectFilter'
 import '@inovua/reactdatagrid-enterprise/index.css'
+import Chart from './Chart'
 
 const renderRowDetails = ({ data }) => {
+  const eventTime = new Date(data['datetime_et']);
+
   return <div style={{ padding: 20}} >
-    <h3>Row details:</h3>
-    <table>
-      <tbody>
-        {Object.keys(data).map((name, i) => {
-          return <tr key={i}>
-            <td>{name}</td>
-            <td>{data[name]}</td>
-          </tr>
-        })}
-      </tbody>
-    </table>
+    <p>red: drop, blue: jump</p>
+    <Chart 
+      market={data['market']}
+      symbol={data['symbol']}
+      eventEpochSeconds={parseInt(eventTime.getTime() / 1000)}
+      priceAtMaxJump={data['price_at_max_jump']}
+      priceATMinDrop={data['price_at_min_drop']}
+      maxJumpEpochSeconds={data['max_jump_epoch_seconds']}
+      minDropEpochSeconds={data['min_drop_epoch_seconds']}
+      windowSizeMinutes={data['window_size_minutes']}
+      />
   </div>
 };
 
@@ -304,6 +307,7 @@ function SignalDataGrid() {
                     idProperty="id"
                     columns={stockColumns}
                     dataSource={stockItems}
+                    renderRowDetails={renderRowDetails}
                     style={gridStyle}
                     defaultFilterValue={defaultFilterValue}
                     rowExpandHeight={400}
@@ -315,6 +319,7 @@ function SignalDataGrid() {
                     idProperty="id"
                     columns={cryptoColumns}
                     dataSource={cryptoItems}
+                    renderRowDetails={renderRowDetails}
                     style={gridStyle}
                     defaultFilterValue={defaultFilterValue}
                     rowExpandHeight={400}
