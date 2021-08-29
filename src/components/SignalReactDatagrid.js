@@ -308,7 +308,6 @@ function SignalDataGrid() {
                     style={gridStyle}
                     defaultFilterValue={defaultFilterValue}
                     rowExpandHeight={400}
-                    renderRowDetails={renderRowDetails}
                     defaultGroupBy={['date']}
                 />
             </TabPanel>
@@ -320,7 +319,6 @@ function SignalDataGrid() {
                     style={gridStyle}
                     defaultFilterValue={defaultFilterValue}
                     rowExpandHeight={400}
-                    renderRowDetails={renderRowDetails}
                     defaultGroupBy={['date']}
                 />
             </TabPanel>
