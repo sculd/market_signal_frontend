@@ -7,6 +7,23 @@ import 'react-tabs/style/react-tabs.css';
 import ReactDataGrid from '@inovua/reactdatagrid-enterprise'
 import SelectFilter from '@inovua/reactdatagrid-community/SelectFilter'
 import '@inovua/reactdatagrid-enterprise/index.css'
+import { createChart } from 'lightweight-charts';
+
+const renderRowDetails = ({ data }) => {
+  return <div style={{ padding: 20}} >
+    <h3>Row details:</h3>
+    <table>
+      <tbody>
+        {Object.keys(data).map((name, i) => {
+          return <tr key={i}>
+            <td>{name}</td>
+            <td>{data[name]}</td>
+          </tr>
+        })}
+      </tbody>
+    </table>
+  </div>
+};
 
 const getColumn = (items) => {
   return [
@@ -264,6 +281,8 @@ function SignalDataGrid() {
                     dataSource={stockItems}
                     style={gridStyle}
                     defaultFilterValue={defaultFilterValue}
+                    rowExpandHeight={400}
+                    renderRowDetails={renderRowDetails}
                 />
             </TabPanel>
             <TabPanel>
@@ -273,6 +292,8 @@ function SignalDataGrid() {
                     dataSource={cryptoItems}
                     style={gridStyle}
                     defaultFilterValue={defaultFilterValue}
+                    rowExpandHeight={400}
+                    renderRowDetails={renderRowDetails}
                 />
             </TabPanel>
           </Tabs>
