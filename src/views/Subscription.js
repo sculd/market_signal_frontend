@@ -172,6 +172,7 @@ const Subscription = () => {
 
     return (
         <Styles>
+          <Container className="d-xxl-flex mt-5">
             <div>
             {isAuthenticated && (
                 <div>
@@ -301,6 +302,7 @@ const Subscription = () => {
                 </Row>
             </Container>
             </div>
+          </Container>
         </Styles>
     );
 }

@@ -6,7 +6,7 @@ import { Styles } from "../utils/style";
 
 const About = () => (
   <Styles>
-    <Container className="mb-5">
+    <Container className="d-xxl-flex mt-5">
       <Fragment>
         <div>
         <h1>About</h1>

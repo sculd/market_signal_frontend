@@ -84,7 +84,7 @@ const gridStyle = {
 }
 
 const Styles = styled.div`
-  padding: 1rem 5rem;
+  padding: 1rem 5rem; /* vert hor  */
 
   table {
     border-spacing: 0;
@@ -242,7 +242,7 @@ function SignalDataGrid() {
     }, [cryptoItems]); // eslint-disable-line react-hooks/exhaustive-deps
   
     return (
-        <Styles>
+        <Styles className="datagrid">
           <Tabs>
             <TabList>
               <Tab>Stock</Tab>

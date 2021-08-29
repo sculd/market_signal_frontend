@@ -165,7 +165,7 @@ const Alert = () => {
   
     return (
       <Styles>
-        <Container className="mb-5">
+        <Container className="d-xxl-flex mt-5">
             <div>
             <h1>Alert{"  "}
             {apiState.isLoading && (

@@ -38,7 +38,7 @@ const App = () => {
 
   return (
     <Router history={history}>
-      <div id="app" className="d-flex flex-column h-100 w-100">
+      <div id="app" className="flex-column h-100 w-100">
         <NavBar />
           <Switch>
             <Route path="/" exact component={Home} />
