@@ -223,7 +223,7 @@ function SignalDataGrid() {
         <div></div>
       )
         
-    const cryptoFilterValue = [
+    const defaultFilterValue = [
       { name: 'symbol', operator: 'eq', type: 'select', value: null },
       { name: 'window_size_minutes', operator: 'eq', type: 'select', value: null },
       { name: 'threshold', operator: 'eq', type: 'select', value: null },
@@ -260,6 +260,7 @@ function SignalDataGrid() {
                     columns={stockColumns}
                     dataSource={stockItems}
                     style={gridStyle}
+                    defaultFilterValue={defaultFilterValue}
                 />
             </TabPanel>
             <TabPanel>
@@ -268,7 +269,7 @@ function SignalDataGrid() {
                     columns={cryptoColumns}
                     dataSource={cryptoItems}
                     style={gridStyle}
-                    defaultFilterValue={cryptoFilterValue}
+                    defaultFilterValue={defaultFilterValue}
                 />
             </TabPanel>
           </Tabs>
