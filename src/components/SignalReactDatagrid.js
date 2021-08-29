@@ -14,7 +14,8 @@ const getColumn = (items) => {
         name: 'datetime_et',
         header: 'Datetime',
         render: ({ value }) => Date(value).toLocaleString(),
-        minWidth: 180
+        minWidth: 380,
+        maxWidth: 420
     },
     { 
       name: 'symbol', 
@@ -85,6 +86,8 @@ const gridStyle = {
 
 const Styles = styled.div`
   padding: 1rem 5rem; /* vert hor  */
+
+  max-width: 1900px;
 
   table {
     border-spacing: 0;
@@ -242,7 +245,7 @@ function SignalDataGrid() {
     }, [cryptoItems]); // eslint-disable-line react-hooks/exhaustive-deps
   
     return (
-        <Styles className="datagrid">
+        <Styles>
           <Tabs>
             <TabList>
               <Tab>Stock</Tab>
