@@ -8,7 +8,6 @@ import 'react-tabs/style/react-tabs.css';
 import ReactDataGrid from '@inovua/reactdatagrid-enterprise'
 import SelectFilter from '@inovua/reactdatagrid-community/SelectFilter'
 import '@inovua/reactdatagrid-enterprise/index.css'
-import { createChart } from 'lightweight-charts';
 
 const renderRowDetails = ({ data }) => {
   return <div style={{ padding: 20}} >
