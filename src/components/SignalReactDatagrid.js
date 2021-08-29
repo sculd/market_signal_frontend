@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from "react";
+import { Container } from "reactstrap";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -28,11 +29,18 @@ const renderRowDetails = ({ data }) => {
 const getColumn = (items) => {
   return [
     {
+        name: 'date',
+        header: 'Date',
+        render: ({ value }) => value,
+        minWidth: 80
+    },
+    {
         name: 'datetime_et',
         header: 'Datetime',
-        render: ({ value }) => Date(value).toLocaleString(),
-        minWidth: 380,
-        maxWidth: 420
+        render: ({ value }) => {
+          return new Date(value).toLocaleTimeString();
+        },
+        minWidth: 150
     },
     { 
       name: 'symbol', 
@@ -48,12 +56,12 @@ const getColumn = (items) => {
           <Link to={to} target="_blank">{value}</Link>
         </div>
       },
-      maxWidth: 100
+      maxWidth: 120
     },
     {
       name: 'recent_price',
       header: 'Current',
-      render: ({ value }) => "$" + String(Number(value).toFixed(1)),
+      render: ({ value }) => value ? "$" + String(Number(value).toFixed(1)) : '',
       maxWidth: 80
     },
     {
@@ -74,7 +82,7 @@ const getColumn = (items) => {
         placeholder: 'All',
         dataSource: [{id: "0.1", label: '10%'}, {id: "0.2", label: '20%'}, {id: "0.3", label: '30%'}]
       },
-      render: ({ value }) => String(Number(value * 100).toFixed(0)) + "%",
+      render: ({ value }) => value ? String(Number(value * 100).toFixed(0)) + "%" : '',
       maxWidth: 100
     },
     {
@@ -89,8 +97,24 @@ const getColumn = (items) => {
     {
       name: 'summary',
       header: 'Summary', 
-      minWidth: 800,
-      maxWidth: 1000
+      minWidth: 600,
+      render: ({ data }) => {
+        const jumpStr = `Jump ${(data.max_jump * 100).toFixed(0)}% to $${data.price_at_max_jump} at ${new Date(data.max_jump_epoch_seconds).toLocaleTimeString()}`;
+        const dropStr = `Drop ${(data.min_drop * 100).toFixed(0)}% to $${data.price_at_min_drop} at ${new Date(data.min_drop_epoch_seconds).toLocaleTimeString()}`;
+        if (data.max_jump < parseFloat(data.threshold)) {
+          return dropStr
+        }
+        if (Math.abs(data.min_drop) < parseFloat(data.threshold)) {
+          return jumpStr
+        }
+        var former = jumpStr;
+        var latter = dropStr;
+        if (data.max_jump_epoch_seconds > data.min_drop_epoch_seconds) {
+          former = dropStr;
+          latter = jumpStr;
+        }
+        return `${former} and ${latter}`;
+      }
     },
   ]
 }
@@ -98,13 +122,13 @@ const getColumn = (items) => {
 const baseColumns = getColumn([]);
   
 const gridStyle = { 
-  minHeight: 1200 
+  minHeight: 1000 
 }
 
 const Styles = styled.div`
   padding: 1rem 5rem; /* vert hor  */
 
-  max-width: 1900px;
+  max-width: 1500px;
 
   table {
     border-spacing: 0;
@@ -254,14 +278,16 @@ function SignalDataGrid() {
     const [cryptoColumns, setCryptoColumns] = useState(baseColumns);
 
     useEffect(() => {
-      setCryptoColumns(getColumn(stockItems))
-    }, [cryptoItems]); // eslint-disable-line react-hooks/exhaustive-deps
+      setStockColumns(getColumn(stockItems))
+    }, [stockItems]); // eslint-disable-line react-hooks/exhaustive-deps
       
     useEffect(() => {
+      console.log('cryptoItems:', cryptoItems)
       setCryptoColumns(getColumn(cryptoItems))
     }, [cryptoItems]); // eslint-disable-line react-hooks/exhaustive-deps
   
     return (
+      <Container className="container-datagrid d-xxl-flex mt-5">
         <Styles>
           <Tabs>
             <TabList>
@@ -283,6 +309,7 @@ function SignalDataGrid() {
                     defaultFilterValue={defaultFilterValue}
                     rowExpandHeight={400}
                     renderRowDetails={renderRowDetails}
+                    defaultGroupBy={['date']}
                 />
             </TabPanel>
             <TabPanel>
@@ -294,10 +321,12 @@ function SignalDataGrid() {
                     defaultFilterValue={defaultFilterValue}
                     rowExpandHeight={400}
                     renderRowDetails={renderRowDetails}
+                    defaultGroupBy={['date']}
                 />
             </TabPanel>
           </Tabs>
         </Styles>
+      </Container>
     );
   }
   

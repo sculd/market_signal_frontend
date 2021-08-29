@@ -99,7 +99,6 @@ const Subscription = () => {
     };
 
     const handleFree = async () => {
-        console.log('subscriptionData:', subscriptionData)
         loginWithRedirect();
     };
 
@@ -167,7 +166,6 @@ const Subscription = () => {
     }, [subscriptionData]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        console.log('subscriptionData:', subscriptionData)
     }, [subscriptionData]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (

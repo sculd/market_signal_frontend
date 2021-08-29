@@ -46,13 +46,10 @@ const Alert = () => {
 
     const updateAllowSMSAlert = async () => {
       setAllowSMSAlert(getIfAllowSMSAlert(subscriptionData?.subscriptions));
-      console.log('subscriptionData:', subscriptionData)
-      console.log('allowSMSAlert:', allowSMSAlert)
     };
 
     const updateAllowWildcardSymbol = async () => {
       setAllowWildcardSymbol(getIfAllowWildcardSymbol(subscriptionData?.subscriptions));
-      console.log('allowWildcardSymbol:', allowWildcardSymbol)
     };
 
     const updateAlerts = async () => {
@@ -81,7 +78,6 @@ const Alert = () => {
             apiMessage: responseData,
             isLoading: false,
           });
-          console.log('apiState (after responseData):', apiState)
         } catch (error) {
             setApiState({
             ...apiState,

@@ -33,3 +33,7 @@
 .result-block-container .result-block {
   opacity: 1;
 }
+
+.container-datagrid {
+  max-width: 1500px;
+} 
