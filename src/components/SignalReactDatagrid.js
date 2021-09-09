@@ -98,8 +98,8 @@ const getColumn = (items) => {
       header: 'Summary', 
       minWidth: 600,
       render: ({ data }) => {
-        const jumpStr = `Jump ${(data.max_jump * 100).toFixed(0)}% to $${data.price_at_max_jump} at ${new Date(data.max_jump_epoch_seconds).toLocaleTimeString()}`;
-        const dropStr = `Drop ${(data.min_drop * 100).toFixed(0)}% to $${data.price_at_min_drop} at ${new Date(data.min_drop_epoch_seconds).toLocaleTimeString()}`;
+        const jumpStr = `Jump ${(data.max_jump * 100).toFixed(0)}% to $${data.price_at_max_jump} at ${new Date(data.max_jump_epoch_seconds * 1000).toLocaleTimeString()}`;
+        const dropStr = `Drop ${(data.min_drop * 100).toFixed(0)}% to $${data.price_at_min_drop} at ${new Date(data.min_drop_epoch_seconds * 1000).toLocaleTimeString()}`;
         if (data.max_jump < parseFloat(data.threshold)) {
           return dropStr
         }
