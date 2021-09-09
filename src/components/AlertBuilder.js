@@ -15,8 +15,8 @@ const phoneNumberRegExp = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
 
 const options_window = [
     { value: '20', label: '20 Minutes' },
-    { value: '360', label: '1 Hour' },
-    { value: '1080', label: '3 Hours' }
+    { value: '60', label: '1 Hour' },
+    { value: '180', label: '3 Hours' }
 ];
 
 const options_threshold = [
