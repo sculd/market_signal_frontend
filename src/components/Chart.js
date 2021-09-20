@@ -110,8 +110,8 @@ const Chart = (props) => {
       lineType: 1,
     });
     dropLines.setData([
-      { time: minDropEpochSeconds, value: priceATMinDrop },
-      { time: minDropEpochSeconds+1, value: maxValue },
+      { time: minDropEpochSeconds, value: maxValue },
+      { time: minDropEpochSeconds+1, value: priceATMinDrop },
     ]);
     chart.timeScale().fitContent();
   }, [timeseries]);
