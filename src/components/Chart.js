@@ -99,7 +99,7 @@ const Chart = (props) => {
     const minValue = Math.min(...timeseries.map(v => v['value']))
     jumpLines.setData([
       { time: maxJumpEpochSeconds, value: minValue },
-      { time: maxJumpEpochSeconds, value: priceAtMaxJump },
+      { time: maxJumpEpochSeconds+1, value: priceAtMaxJump },
     ]);
     const dropLines = chart.addLineSeries({
       title: 'Drop',
@@ -111,7 +111,7 @@ const Chart = (props) => {
     });
     dropLines.setData([
       { time: minDropEpochSeconds, value: priceATMinDrop },
-      { time: minDropEpochSeconds, value: maxValue },
+      { time: minDropEpochSeconds+1, value: maxValue },
     ]);
     chart.timeScale().fitContent();
   }, [timeseries]);
