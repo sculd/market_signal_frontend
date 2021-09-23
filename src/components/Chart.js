@@ -1,6 +1,7 @@
 import React from 'react'
 import { createChart, isBusinessDay } from "lightweight-charts";
 import { useEffect, useState, useRef } from "react";
+import { Spinner } from 'reactstrap';
 import { marketPriceBaseUrl } from "../utils/apiUrls";
 
 const Chart = (props) => {
@@ -17,6 +18,7 @@ const Chart = (props) => {
 
   const [error, setError] = useState(null);
   const [timeseries, setTimeseries] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   function fetchTimeseries() {
     const beginEpochSeconds = Math.min(maxJumpEpochSeconds, minDropEpochSeconds, eventEpochSeconds) - 60 * 5
@@ -32,7 +34,7 @@ const Chart = (props) => {
     }
     const from_epoch_datetime = `${fromTime.getFullYear()}-${toTwDigits(fromTime.getMonth()+1)}-${toTwDigits(fromTime.getDate())}T${toTwDigits(fromTime.getHours())}:${toTwDigits(fromTime.getMinutes())}:00-04:00`
     const url = `${marketPriceBaseUrl}/history/markets/${market}/symbols/${symbol}?from=${from_epoch_datetime}`
-    console.log('url:', url)
+    setIsLoading(true)
     fetch(
       url,
       {
@@ -44,7 +46,7 @@ const Chart = (props) => {
     )
     .then(
       (response) => {
-      return response.json();
+        return response.json();
       },
       (error) => {
         setError(error);
@@ -54,6 +56,7 @@ const Chart = (props) => {
       if (timeseries !== undefined) {
         setTimeseries(data.map((b) => { return {time: b['t'], value: b['c']}}));
       }
+      setIsLoading(false)
     });
   }
 
@@ -116,7 +119,14 @@ const Chart = (props) => {
     chart.timeScale().fitContent();
   }, [timeseries]);
 
-  return <div ref={chartRef} />;
+  return (
+    <div>
+      {isLoading && (
+        <Spinner size="sm" color="primary" />
+      )}
+      <div ref={chartRef} />
+    </div>
+    );
 };
 
 export default Chart;
