@@ -20,18 +20,19 @@ const Chart = (props) => {
   const [timeseries, setTimeseries] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const toTwDigits = (v) => { 
+    if (parseInt(v) < 10) { 
+      return '0' + v 
+    } else { 
+      return '' + v
+    } 
+  }
+  
   function fetchTimeseries() {
     const beginEpochSeconds = Math.min(maxJumpEpochSeconds, minDropEpochSeconds, eventEpochSeconds) - 60 * 5
     const eventTime = new Date(eventEpochSeconds * 1000)
     const fromTime = new Date(beginEpochSeconds * 1000)
 
-    const toTwDigits = (v) => { 
-      if (parseInt(v) < 10) { 
-        return '0' + v 
-      } else { 
-        return '' + v
-      } 
-    }
     const from_epoch_datetime = `${fromTime.getFullYear()}-${toTwDigits(fromTime.getMonth()+1)}-${toTwDigits(fromTime.getDate())}T${toTwDigits(fromTime.getHours())}:${toTwDigits(fromTime.getMinutes())}:00-04:00`
     const url = `${marketPriceBaseUrl}/history/markets/${market}/symbols/${symbol}?from=${from_epoch_datetime}`
     setIsLoading(true)
@@ -84,7 +85,7 @@ const Chart = (props) => {
         barSpacing: 20, // 그래프 사이의 간격
         tickMarkFormatter: (time, tickMarkType, locale) => {
           const t = new Date(time * 1000)
-          return `${t.getHours()}:${t.getMinutes()}`
+          return `${toTwDigits(t.getHours())}:${toTwDigits(t.getMinutes())}`
         },
       },
     });
