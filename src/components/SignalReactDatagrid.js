@@ -40,7 +40,7 @@ const getColumn = (items) => {
         name: 'datetime_et',
         header: 'Datetime',
         render: ({ value }) => {
-          return new Date(value).toLocaleTimeString();
+          return new Date(value).toLocaleTimeString('en-US');
         },
         minWidth: 150
     },
