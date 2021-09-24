@@ -11,7 +11,7 @@ import '@inovua/reactdatagrid-enterprise/index.css'
 import Chart from './Chart'
 
 const renderRowDetails = ({ data }) => {
-  const eventTime = new Date(data['datetime_et']);
+  const eventTime = new Date(data['timestamp'] * 1000);
 
   return <div style={{ padding: 20}} >
     <p>red: drop, blue: jump</p>
