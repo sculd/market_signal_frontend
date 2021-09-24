@@ -37,10 +37,10 @@ const getColumn = (items) => {
         minWidth: 80
     },
     {
-        name: 'datetime_et',
+        name: 'timestamp',
         header: 'Datetime',
         render: ({ value }) => {
-          return new Date(value).toLocaleTimeString('en-US');
+          return new Date(value * 1000).toLocaleTimeString('en-US');
         },
         minWidth: 150
     },
