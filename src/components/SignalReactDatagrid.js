@@ -178,7 +178,7 @@ function SignalDataGrid() {
     function fetchUpdateStock() {
       setIsStockLoading(true);
       fetch(
-        "https://7tj23qrgl1.execute-api.us-east-2.amazonaws.com/test/moves?market=stock",
+        "https://7tj23qrgl1.execute-api.us-east-2.amazonaws.com/test/moves?market=polygon",
         {
           method: "get",
           headers: new Headers({
