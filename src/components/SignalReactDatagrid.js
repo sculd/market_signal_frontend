@@ -69,7 +69,7 @@ const getColumn = (items) => {
     {
       name: 'window_size_minutes',
       header: 'Window',
-      maxWidth: 100,
+      maxWidth: 120,
       filterEditor: SelectFilter,
       filterEditorProps: {
         placeholder: 'All',
@@ -85,7 +85,7 @@ const getColumn = (items) => {
         dataSource: [{id: "0.1", label: '10%'}, {id: "0.2", label: '20%'}, {id: "0.3", label: '30%'}]
       },
       render: ({ value }) => value ? String(Number(value * 100).toFixed(0)) + "%" : '',
-      maxWidth: 100
+      maxWidth: 140
     },
     {
       name: 'type_str',
