@@ -64,7 +64,7 @@ const getColumn = (items) => {
       name: 'recent_price',
       header: 'Current',
       render: ({ value }) => value ? "$" + String(Number(value).toFixed(1)) : '',
-      maxWidth: 80
+      maxWidth: 100
     },
     {
       name: 'window_size_minutes',
