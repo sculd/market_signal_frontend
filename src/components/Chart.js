@@ -10,9 +10,13 @@ const Chart = (props) => {
     symbol,
     eventEpochSeconds,
     priceAtMaxJump,
-    priceATMinDrop,
     maxJumpEpochSeconds,
+    minPriceForMaxJump,
+    minPriceForMaxJumpEpochSeconds,
+    priceAtMinDrop,
     minDropEpochSeconds,
+    maxPriceForMinDrop,
+    maxPriceForMinDropEpochSeconds,
     windowSizeMinutes
   } = props;
 
@@ -67,7 +71,7 @@ const Chart = (props) => {
   
   const chartRef = useRef(null);
   useEffect(() => {
-    if (timeseries === undefined || timeseries.length == 0) {
+    if (timeseries === undefined || timeseries.length === 0) {
       return
     }
     const chart = createChart(chartRef.current, { width: 600, height: 200 });
@@ -97,13 +101,13 @@ const Chart = (props) => {
       lineStyle: 0,
       lineWidth: 1,
       crosshairMarkerVisible: false,
-      lineType: 1,
     });
     const maxValue = Math.max(...timeseries.map(v => v['value']))
     const minValue = Math.min(...timeseries.map(v => v['value']))
+    console.log('maxValue', maxValue, 'minValue', minValue)
     jumpLines.setData([
+      { time: minPriceForMaxJumpEpochSeconds, value: minPriceForMaxJump },
       { time: maxJumpEpochSeconds, value: priceAtMaxJump },
-      { time: maxJumpEpochSeconds, value: minValue },
     ]);
     const dropLines = chart.addLineSeries({
       title: 'Drop',
@@ -111,11 +115,11 @@ const Chart = (props) => {
       lineStyle: 0,
       lineWidth: 1,
       crosshairMarkerVisible: false,
-      lineType: 1,
+      //lineType: 1,
     });
     dropLines.setData([
-      { time: minDropEpochSeconds, value: priceATMinDrop },
-      { time: minDropEpochSeconds, value: maxValue },
+      { time: maxPriceForMinDropEpochSeconds, value: maxPriceForMinDrop },
+      { time: minDropEpochSeconds, value: priceAtMinDrop },
     ]);
     chart.timeScale().fitContent();
   }, [timeseries]);

@@ -20,9 +20,13 @@ const renderRowDetails = ({ data }) => {
       symbol={data['symbol']}
       eventEpochSeconds={parseInt(eventTime.getTime() / 1000)}
       priceAtMaxJump={data['price_at_max_jump']}
-      priceATMinDrop={data['price_at_min_drop']}
       maxJumpEpochSeconds={data['max_jump_epoch_seconds']}
+      minPriceForMaxJump={data['min_price_for_max_jump']}
+      minPriceForMaxJumpEpochSeconds={data['min_price_for_max_jump_epoch_seconds']}
+      priceAtMinDrop={data['price_at_min_drop']}
       minDropEpochSeconds={data['min_drop_epoch_seconds']}
+      maxPriceForMinDrop={data['max_price_for_min_drop']}
+      maxPriceForMinDropEpochSeconds={data['max_price_for_min_drop_epoch_seconds']}
       windowSizeMinutes={data['window_size_minutes']}
       />
   </div>
