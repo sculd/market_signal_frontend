@@ -28,6 +28,7 @@ const renderRowDetails = ({ data }) => {
       maxPriceForMinDrop={data['max_price_for_min_drop']}
       maxPriceForMinDropEpochSeconds={data['max_price_for_min_drop_epoch_seconds']}
       windowSizeMinutes={data['window_size_minutes']}
+      type={data['type_str']}
       />
   </div>
 };

@@ -17,7 +17,8 @@ const Chart = (props) => {
     minDropEpochSeconds,
     maxPriceForMinDrop,
     maxPriceForMinDropEpochSeconds,
-    windowSizeMinutes
+    windowSizeMinutes,
+    type
   } = props;
 
   const [error, setError] = useState(null);
@@ -95,32 +96,36 @@ const Chart = (props) => {
     });
     const lineSeries = chart.addLineSeries();
     lineSeries.setData(timeseries);
-    const jumpLines = chart.addLineSeries({
-      title: 'Jump',
-      color: 'blue',
-      lineStyle: 0,
-      lineWidth: 1,
-      crosshairMarkerVisible: false,
-    });
     const maxValue = Math.max(...timeseries.map(v => v['value']))
     const minValue = Math.min(...timeseries.map(v => v['value']))
-    console.log('maxValue', maxValue, 'minValue', minValue)
-    jumpLines.setData([
-      { time: minPriceForMaxJumpEpochSeconds, value: minPriceForMaxJump },
-      { time: maxJumpEpochSeconds, value: priceAtMaxJump },
-    ]);
-    const dropLines = chart.addLineSeries({
-      title: 'Drop',
-      color: 'red',
-      lineStyle: 0,
-      lineWidth: 1,
-      crosshairMarkerVisible: false,
-      //lineType: 1,
-    });
-    dropLines.setData([
-      { time: maxPriceForMinDropEpochSeconds, value: maxPriceForMinDrop },
-      { time: minDropEpochSeconds, value: priceAtMinDrop },
-    ]);
+
+    if (type.toLowerCase().includes('jump')) {
+      const jumpLines = chart.addLineSeries({
+        title: 'Jump',
+        color: 'blue',
+        lineStyle: 0,
+        lineWidth: 1,
+        crosshairMarkerVisible: false,
+      });
+      jumpLines.setData([
+        { time: minPriceForMaxJumpEpochSeconds, value: minPriceForMaxJump },
+        { time: maxJumpEpochSeconds, value: priceAtMaxJump },
+      ]);
+    }
+    if (type.toLowerCase().includes('drop')) {
+      const dropLines = chart.addLineSeries({
+        title: 'Drop',
+        color: 'red',
+        lineStyle: 0,
+        lineWidth: 1,
+        crosshairMarkerVisible: false,
+        //lineType: 1,
+      });
+      dropLines.setData([
+        { time: maxPriceForMinDropEpochSeconds, value: maxPriceForMinDrop },
+        { time: minDropEpochSeconds, value: priceAtMinDrop },
+      ]);
+      }
     chart.timeScale().fitContent();
   }, [timeseries]);
 
