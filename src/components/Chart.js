@@ -59,7 +59,7 @@ const Chart = (props) => {
       }
     )
     .then(data => {
-      if (timeseries !== undefined) {
+      if (data !== undefined && timeseries !== undefined) {
         setTimeseries(data.map((b) => { return {time: b['t'], value: b['c']}}));
       }
       setIsLoading(false)
