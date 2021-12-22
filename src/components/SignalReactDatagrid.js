@@ -168,8 +168,9 @@ function SignalDataGrid() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isStockLoading, setIsStockLoading] = useState(true);
     const [isCryptoLoading, setIsCryptoLoading] = useState(true);
-    const [stockItems, setStockIItems] = useState([]);
-    const [cryptoItems, setCryptoItems] = useState([]);
+    const [stockItems, setStockItems] = useState([]);
+    const [binanceItems, setBinanceItems] = useState([]);
+    const [okcoinItems, setOkcoinItems] = useState([]);
   
     function addIdsToRows(rows) {
       let id = 0;
@@ -204,12 +205,12 @@ function SignalDataGrid() {
         setIsLoaded(true);
         setIsStockLoading(false);
         if (stockItems !== undefined) {
-          setStockIItems(addIdsToRows(data));
+          setStockItems(addIdsToRows(data));
         }
       });
     }
   
-    function fetchUpdateCrypto() {
+    function fetchUpdateBinance() {
       setIsCryptoLoading(true);
       fetch(
         "https://7tj23qrgl1.execute-api.us-east-2.amazonaws.com/test/moves?market=binance",
@@ -232,15 +233,45 @@ function SignalDataGrid() {
       .then(data => {
         setIsLoaded(true);
         setIsCryptoLoading(false);
-        if (cryptoItems !== undefined) {
-          setCryptoItems(addIdsToRows(data));
+        if (binanceItems !== undefined) {
+          setBinanceItems(addIdsToRows(data));
+        }
+      });
+    }
+  
+    function fetchUpdateOkcoin() {
+      setIsCryptoLoading(true);
+      fetch(
+        "https://7tj23qrgl1.execute-api.us-east-2.amazonaws.com/test/moves?market=okcoin",
+        {
+          method: "get",
+          headers: new Headers({
+            "x-api-key": process.env.REACT_APP_API_GATEWAY_API_KEY
+          })
+        }
+      )
+      .then(
+        (response) => {
+        return response.json();
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        }
+      )
+      .then(data => {
+        setIsLoaded(true);
+        setIsCryptoLoading(false);
+        if (okcoinItems !== undefined) {
+          setOkcoinItems(addIdsToRows(data));
         }
       });
     }
   
     function onInterval() {
       fetchUpdateStock();
-      fetchUpdateCrypto();
+      fetchUpdateBinance();
+      fetchUpdateOkcoin();
     }
     
     useEffect(() => {
@@ -255,7 +286,11 @@ function SignalDataGrid() {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
     
     useEffect(() => {
-      fetchUpdateCrypto();
+      fetchUpdateBinance();
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+      
+    useEffect(() => {
+      fetchUpdateOkcoin();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
       
     const Loading = () => (
@@ -282,16 +317,20 @@ function SignalDataGrid() {
     ];
 
     const [stockColumns, setStockColumns] = useState(baseColumns);
-    const [cryptoColumns, setCryptoColumns] = useState(baseColumns);
+    const [binanceColumns, setBinanceColumns] = useState(baseColumns);
+    const [okcoinColumns, setOkcoinColumns] = useState(baseColumns);
 
     useEffect(() => {
       setStockColumns(getColumn(stockItems))
     }, [stockItems]); // eslint-disable-line react-hooks/exhaustive-deps
       
     useEffect(() => {
-      console.log('cryptoItems:', cryptoItems)
-      setCryptoColumns(getColumn(cryptoItems))
-    }, [cryptoItems]); // eslint-disable-line react-hooks/exhaustive-deps
+      setBinanceColumns(getColumn(binanceItems))
+    }, [binanceItems]); // eslint-disable-line react-hooks/exhaustive-deps
+  
+    useEffect(() => {
+      setOkcoinColumns(getColumn(okcoinItems))
+    }, [okcoinItems]); // eslint-disable-line react-hooks/exhaustive-deps
   
     return (
       <Container className="container-datagrid d-xxl-flex mt-5">
@@ -299,7 +338,8 @@ function SignalDataGrid() {
           <Tabs>
             <TabList>
               <Tab>Stock</Tab>
-              <Tab>Crypto</Tab>
+              <Tab>Binance</Tab>
+              <Tab>OKCoin</Tab>
             </TabList>
         
             <div>
@@ -323,8 +363,21 @@ function SignalDataGrid() {
             <TabPanel>
                 <ReactDataGrid
                     idProperty="id"
-                    columns={cryptoColumns}
-                    dataSource={cryptoItems}
+                    columns={binanceColumns}
+                    dataSource={binanceItems}
+                    renderRowDetails={renderRowDetails}
+                    style={gridStyle}
+                    defaultFilterValue={defaultFilterValue}
+                    rowExpandHeight={400}
+                    defaultGroupBy={['date']}
+                    showZebraRows={false}
+                />
+            </TabPanel>
+            <TabPanel>
+                <ReactDataGrid
+                    idProperty="id"
+                    columns={okcoinColumns}
+                    dataSource={okcoinItems}
                     renderRowDetails={renderRowDetails}
                     style={gridStyle}
                     defaultFilterValue={defaultFilterValue}
