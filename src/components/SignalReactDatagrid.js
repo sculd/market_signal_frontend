@@ -168,9 +168,12 @@ function SignalDataGrid() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isStockLoading, setIsStockLoading] = useState(true);
     const [isCryptoLoading, setIsCryptoLoading] = useState(true);
+    const [isOkcoinLoading, setIsOkcoinLoading] = useState(true);
+    const [isKrakenLoading, setIsKrakenLoading] = useState(true);
     const [stockItems, setStockItems] = useState([]);
     const [binanceItems, setBinanceItems] = useState([]);
     const [okcoinItems, setOkcoinItems] = useState([]);
+    const [krakenItems, setKrakenItems] = useState([]);
   
     function addIdsToRows(rows) {
       let id = 0;
@@ -240,7 +243,7 @@ function SignalDataGrid() {
     }
   
     function fetchUpdateOkcoin() {
-      setIsCryptoLoading(true);
+      setIsOkcoinLoading(true);
       fetch(
         "https://7tj23qrgl1.execute-api.us-east-2.amazonaws.com/test/moves?market=okcoin",
         {
@@ -261,9 +264,38 @@ function SignalDataGrid() {
       )
       .then(data => {
         setIsLoaded(true);
-        setIsCryptoLoading(false);
+        setIsOkcoinLoading(false);
         if (okcoinItems !== undefined) {
           setOkcoinItems(addIdsToRows(data));
+        }
+      });
+    }
+  
+    function fetchUpdateKraken() {
+      setIsKrakenLoading(true);
+      fetch(
+        "https://7tj23qrgl1.execute-api.us-east-2.amazonaws.com/test/moves?market=kraken",
+        {
+          method: "get",
+          headers: new Headers({
+            "x-api-key": process.env.REACT_APP_API_GATEWAY_API_KEY
+          })
+        }
+      )
+      .then(
+        (response) => {
+        return response.json();
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        }
+      )
+      .then(data => {
+        setIsLoaded(true);
+        setIsKrakenLoading(false);
+        if (krakenItems !== undefined) {
+          setKrakenItems(addIdsToRows(data));
         }
       });
     }
@@ -272,6 +304,7 @@ function SignalDataGrid() {
       fetchUpdateStock();
       fetchUpdateBinance();
       fetchUpdateOkcoin();
+      fetchUpdateKraken();
     }
     
     useEffect(() => {
@@ -292,7 +325,11 @@ function SignalDataGrid() {
     useEffect(() => {
       fetchUpdateOkcoin();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
-      
+       
+    useEffect(() => {
+      fetchUpdateKraken();
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
     const Loading = () => (
       <div>
         Loading...
@@ -319,6 +356,7 @@ function SignalDataGrid() {
     const [stockColumns, setStockColumns] = useState(baseColumns);
     const [binanceColumns, setBinanceColumns] = useState(baseColumns);
     const [okcoinColumns, setOkcoinColumns] = useState(baseColumns);
+    const [krakenColumns, setKrakenColumns] = useState(baseColumns);
 
     useEffect(() => {
       setStockColumns(getColumn(stockItems))
@@ -332,6 +370,10 @@ function SignalDataGrid() {
       setOkcoinColumns(getColumn(okcoinItems))
     }, [okcoinItems]); // eslint-disable-line react-hooks/exhaustive-deps
   
+    useEffect(() => {
+      setKrakenColumns(getColumn(krakenItems))
+    }, [krakenItems]); // eslint-disable-line react-hooks/exhaustive-deps
+  
     return (
       <Container className="container-datagrid d-xxl-flex mt-5">
         <Styles>
@@ -340,10 +382,11 @@ function SignalDataGrid() {
               <Tab>Stock</Tab>
               <Tab>Binance</Tab>
               <Tab>OKCoin</Tab>
+              <Tab>Kraken</Tab>
             </TabList>
         
             <div>
-              { isStockLoading || isCryptoLoading ? <Loading /> : null }
+              { isStockLoading || isCryptoLoading || isOkcoinLoading || isKrakenLoading ? <Loading /> : null }
               { error ? <Error />  : null }
               { isLoaded? <IsLoaded /> : null }
             </div>
@@ -378,6 +421,19 @@ function SignalDataGrid() {
                     idProperty="id"
                     columns={okcoinColumns}
                     dataSource={okcoinItems}
+                    renderRowDetails={renderRowDetails}
+                    style={gridStyle}
+                    defaultFilterValue={defaultFilterValue}
+                    rowExpandHeight={400}
+                    defaultGroupBy={['date']}
+                    showZebraRows={false}
+                />
+            </TabPanel>
+            <TabPanel>
+                <ReactDataGrid
+                    idProperty="id"
+                    columns={krakenColumns}
+                    dataSource={krakenItems}
                     renderRowDetails={renderRowDetails}
                     style={gridStyle}
                     defaultFilterValue={defaultFilterValue}
