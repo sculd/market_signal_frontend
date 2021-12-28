@@ -39,7 +39,7 @@ const Chart = (props) => {
     const fromTime = new Date(beginEpochSeconds * 1000)
 
     const from_epoch_datetime = `${fromTime.getFullYear()}-${toTwDigits(fromTime.getMonth()+1)}-${toTwDigits(fromTime.getDate())}T${toTwDigits(fromTime.getHours())}:${toTwDigits(fromTime.getMinutes())}:00-04:00`
-    const url = `${marketPriceBaseUrl}/history/markets/${market}/symbols/${symbol}?from=${from_epoch_datetime}`
+    const url = `${marketPriceBaseUrl}/history/markets/${market}/symbols/${symbol.replace("/", "")}?from=${from_epoch_datetime}`
     setIsLoading(true)
     fetch(
       url,
