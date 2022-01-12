@@ -168,11 +168,9 @@ function SignalDataGrid() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isStockLoading, setIsStockLoading] = useState(true);
     const [isCryptoLoading, setIsCryptoLoading] = useState(true);
-    const [isOkcoinLoading, setIsOkcoinLoading] = useState(true);
     const [isKrakenLoading, setIsKrakenLoading] = useState(true);
     const [stockItems, setStockItems] = useState([]);
     const [binanceItems, setBinanceItems] = useState([]);
-    const [okcoinItems, setOkcoinItems] = useState([]);
     const [krakenItems, setKrakenItems] = useState([]);
   
     function addIdsToRows(rows) {
@@ -242,35 +240,6 @@ function SignalDataGrid() {
       });
     }
   
-    function fetchUpdateOkcoin() {
-      setIsOkcoinLoading(true);
-      fetch(
-        "https://7tj23qrgl1.execute-api.us-east-2.amazonaws.com/test/moves?market=okcoin",
-        {
-          method: "get",
-          headers: new Headers({
-            "x-api-key": process.env.REACT_APP_API_GATEWAY_API_KEY
-          })
-        }
-      )
-      .then(
-        (response) => {
-        return response.json();
-        },
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-        }
-      )
-      .then(data => {
-        setIsLoaded(true);
-        setIsOkcoinLoading(false);
-        if (okcoinItems !== undefined) {
-          setOkcoinItems(addIdsToRows(data));
-        }
-      });
-    }
-  
     function fetchUpdateKraken() {
       setIsKrakenLoading(true);
       fetch(
@@ -303,7 +272,6 @@ function SignalDataGrid() {
     function onInterval() {
       fetchUpdateStock();
       fetchUpdateBinance();
-      fetchUpdateOkcoin();
       fetchUpdateKraken();
     }
     
@@ -322,10 +290,6 @@ function SignalDataGrid() {
       fetchUpdateBinance();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
       
-    useEffect(() => {
-      fetchUpdateOkcoin();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
-       
     useEffect(() => {
       fetchUpdateKraken();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -355,7 +319,6 @@ function SignalDataGrid() {
 
     const [stockColumns, setStockColumns] = useState(baseColumns);
     const [binanceColumns, setBinanceColumns] = useState(baseColumns);
-    const [okcoinColumns, setOkcoinColumns] = useState(baseColumns);
     const [krakenColumns, setKrakenColumns] = useState(baseColumns);
 
     useEffect(() => {
@@ -365,10 +328,6 @@ function SignalDataGrid() {
     useEffect(() => {
       setBinanceColumns(getColumn(binanceItems))
     }, [binanceItems]); // eslint-disable-line react-hooks/exhaustive-deps
-  
-    useEffect(() => {
-      setOkcoinColumns(getColumn(okcoinItems))
-    }, [okcoinItems]); // eslint-disable-line react-hooks/exhaustive-deps
   
     useEffect(() => {
       setKrakenColumns(getColumn(krakenItems))
@@ -381,12 +340,11 @@ function SignalDataGrid() {
             <TabList>
               <Tab>Stock</Tab>
               <Tab>Binance</Tab>
-              <Tab>OKCoin</Tab>
               <Tab>Kraken</Tab>
             </TabList>
         
             <div>
-              { isStockLoading || isCryptoLoading || isOkcoinLoading || isKrakenLoading ? <Loading /> : null }
+              { isStockLoading || isCryptoLoading || isKrakenLoading ? <Loading /> : null }
               { error ? <Error />  : null }
               { isLoaded? <IsLoaded /> : null }
             </div>
@@ -408,19 +366,6 @@ function SignalDataGrid() {
                     idProperty="id"
                     columns={binanceColumns}
                     dataSource={binanceItems}
-                    renderRowDetails={renderRowDetails}
-                    style={gridStyle}
-                    defaultFilterValue={defaultFilterValue}
-                    rowExpandHeight={400}
-                    defaultGroupBy={['date']}
-                    showZebraRows={false}
-                />
-            </TabPanel>
-            <TabPanel>
-                <ReactDataGrid
-                    idProperty="id"
-                    columns={okcoinColumns}
-                    dataSource={okcoinItems}
                     renderRowDetails={renderRowDetails}
                     style={gridStyle}
                     defaultFilterValue={defaultFilterValue}
